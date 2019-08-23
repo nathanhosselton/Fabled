@@ -161,7 +161,7 @@ extension DeclarativeView {
 
             //Obscure background content if set
             if let obscure = contentObscuringView {
-                _ = obscure.height(window.bounds.height).width(window.bounds.height)
+                _ = obscure.height(window.bounds.height).width(window.bounds.width)
                 superview.insertSubview(obscure, belowSubview: self)
             }
 
