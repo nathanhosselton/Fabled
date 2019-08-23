@@ -10,7 +10,7 @@ If you've come to report a bug or otherwise provide feedback, you can do that [h
 
 ## Privacy Policy
 
-[Here you go](https://github.com/nathanhosselton/Fabled/blob/master/Privacy-Policy) (Spoiler: we don't do anything with your Destiny data but show it to you).
+[Here you go](https://github.com/nathanhosselton/Fabled/blob/master/Privacy-Policy.md) (Spoiler: we don't do anything with your Destiny data but show it to you).
 
 # About
 
@@ -22,7 +22,7 @@ The motivation for the app was not simply to display information, however. I als
 
 ## Early Release
 
-Due to upcoming changes detailed in the [next section](#shadowkeep), my work on this app hereto was in danger of being lost. I had completed all of the data retrieval, modeling, calculation, and testing work, leaving only UI to implement. But because of the game changes coming October 1, that was all going to go out the window.
+Due to upcoming changes detailed in the [next section](#re-shadowkeep), my work on this app hereto was in danger of being lost. I had completed all of the data retrieval, modeling, calculation, and testing work, leaving only UI to implement. But because of the game changes coming October 1, that was all going to go out the window.
 
 So, rather than let that effort go to waste, I decided to release early in the hopes that Destiny players may get some value out of it before the work becomes obsolete. This required that I compromise on the UI _and_ my UI code. Which I'm not happy about. But I think it was the right trade-off to make.
 
