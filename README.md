@@ -1,6 +1,6 @@
 # Fabled - Destiny 2 Glory Tracker
 
-This is the source code for the "Fabled - Destiny Glory Tracker" (the 2 wouldn't fit) app in the App Store (awaiting review).
+This is the source code for the "Fabled - Destiny Glory Tracker" (the 2 wouldn't fit) app in the [App Store](https://apps.apple.com/us/app/fabled-destiny-glory-tracker/id1477568586).
 
 I am releasing this app and its source code much earlier than I wanted due to upcoming changes in the game discussed [below](#early-release). The UI is admittedly not where I wanted it. And the code isn't either (especially my Bindable Views). I discuss this at length in the later sections.
 
