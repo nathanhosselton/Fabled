@@ -129,8 +129,12 @@ extension DeclarativeView {
     /// A negative `offset` value may be provided to exclude any content that you do not mind being
     /// obscured by the keyboard.
     ///
-    /// This method will additionally animate in a full screen, semi-opaque view just behind this view when
-    /// `obscureOtherContent` is set.
+    /// This method will additionally animate in a full-screen, semi-opaque view just behind this view when
+    /// `obscureOtherContent` is set. This obscuring view will contain a tap gesture recognizer that will call
+    /// `endEdtiting(:)` on this view when triggered, dismissing the keyboard when the text field is a subview.
+    ///
+    /// - Note: Though the obscuring view is full-screen, its hit detection is still limited to the frame of its
+    /// superview (which is this view's superview). This is intended behavior of UIKit.
     /// - Parameters:
     ///     - enable: Pass `false` to disable this functionality if previously enabled.
     ///     - offset: An offset amount to apply to the distance between the bottom of this view and the top of the
@@ -144,25 +148,26 @@ extension DeclarativeView {
         }
 
         //Configure obscuring view if set
-        var contentObscuringView: View?
+        var contentObscuringView: ObscureView?
         if obscureOtherContent {
-            contentObscuringView = View().backgroundColor(.black).backgroundOpactiy(0.866).alpha(0.0)
+            contentObscuringView = ObscureView()
+            contentObscuringView!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.endEditing)))
         }
 
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] note in
             guard let self = self, let superview = self.superview, let window = UIApplication.shared.keyWindow else { return }
 
             //Calculate distance
-            let viewBottom = superview.convert(self.frame, to: window).maxY + 8 + offset
+            let viewBottom = window.convert(self.frame, to: window).maxY + 16.0 + offset
             let kbTop = (note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.origin.y ?? 0
             let distance = min(kbTop - viewBottom, 0)
 
             guard distance < 0 else { return }
 
             //Obscure background content if set
-            if let obscure = contentObscuringView {
-                _ = obscure.height(window.bounds.height).width(window.bounds.width)
-                superview.insertSubview(obscure, belowSubview: self)
+            if let contentObscuringView = contentObscuringView {
+                contentObscuringView.frame = window.convert(window.frame, to: superview)
+                superview.insertSubview(contentObscuringView, belowSubview: self)
             }
 
             UIView.animate(withDuration: 0.3) {
@@ -208,4 +213,13 @@ protocol CustomStyleProvidable: class {
     ///   - provider: The function to receive the view object. A named function is recommended.
     ///   - stylable: The view object to be configured.
     func styleProvider(_ provider: (_ stylable: Stylable) -> Void) -> Self
+}
+
+/// Custom view object for obscuring background content in `DeclarativeView.adjustsForKeyboard(:offset:obscureOtherContent:)`.
+private class ObscureView: UIView {
+    required init(coder aDecoder: NSCoder = .empty) {
+        super.init(frame: .zero)
+        backgroundColor = UIColor(white: 0.0, alpha: 0.866)
+        alpha = 0.0
+    }
 }

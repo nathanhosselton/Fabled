@@ -13,6 +13,8 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
     return
       Layout(in: view,
         StackView(.vertical, [
+          Spacer(.flexible),
+
           View(UIImageView(image: #imageLiteral(resourceName: "fabled-alpha")))
             .size(DisplayScale.x375.scale(250)),
 
@@ -45,7 +47,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
               .tintColor(.white)
               .backgroundColor(.clear),
 
-            Spacer(32),
+            Spacer(32 + 8), //+8 accounts for "View Glory" button's label inset
 
             StackView(.horizontal, [
               Spacer(19.5), //Width of righthand activity indicator in text field
@@ -70,7 +72,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
             Spacer(32),
 
             StackView(.horizontal, [
-              Spacer(20 + 8), //Intrisic size of righthand activity indicator + spacing
+              Spacer(8 + 20), //Intrisic size of righthand activity indicator + spacing
 
               Button("View Glory Profile")
                 .observe(with: onViewPressed)
@@ -89,11 +91,12 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
           .alignment(.center)
           .adjustsForKeyboard(obscureOtherContent: true),
 
-          Spacer(DisplayScale.x375.scale(100)) //Counterbalance header image to keep fields more centered
+          Spacer(DisplayScale.x375.scale(100)), //Counterbalance header image to keep fields more centered
+          Spacer(.flexible)
         ])
         .alignment(.center)
       )
-      .centered()
+      .pinnedToEdges()
   }
 
   private let playerSearchActivityIndicator = UIActivityIndicatorView(style: .white)
