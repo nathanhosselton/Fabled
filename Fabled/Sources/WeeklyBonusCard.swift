@@ -8,6 +8,8 @@ final class WeeklyBonusCard: CardView {
   private let gloryAtNextWeeklyReset: Binding<String>
   private let optimisticGloryAtNextWeeklyReset: Binding<String>
 
+  private let matchesRemainingIsOne: Binding<Bool>
+
   private let rankingUpText: Binding<String>
 
   override var body: StackView {
@@ -29,6 +31,7 @@ final class WeeklyBonusCard: CardView {
           Spacer(10),
 
           Text("Matches remaining\nto weekly bonus")
+            .transforming(when: matchesRemainingIsOne) { $1.text = ($0 ? "Match" : "Matches") + " remaining\nto weekly bonus" }
             .numberOfLines(2)
             .fontSize(20)
             .adjustsFontSizeRelativeToDisplay(.x375)
@@ -84,7 +87,7 @@ final class WeeklyBonusCard: CardView {
               .color(.white)
               .isHidden(while: metWeeklyBonus)
             +
-            Text("  Glory at next reset")
+            Text(" Glory at next reset")
               .fontSize(17)
               .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
@@ -119,6 +122,8 @@ final class WeeklyBonusCard: CardView {
     matchesRemainingForWeeklyBonus = matchesRemaining.map(String.init)
     gloryAtNextWeeklyReset = realGlory.map(String.init)
     optimisticGloryAtNextWeeklyReset = optimisticGlory.map(String.init)
+
+    matchesRemainingIsOne = matchesRemaining.map { $0 == 1 }
 
     rankingUpText = willRankUp.map { $0 ? "Ranking up" : "" }
 
