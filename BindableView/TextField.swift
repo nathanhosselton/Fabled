@@ -118,6 +118,20 @@ final class TextField: UITextField, BindableView, BindableControl {
         return self
     }
 
+    /// Sets the auto-capitalization style for the field.
+    /// - parameter type: The auto-capitalization type to use.
+    func autocapitalizationType(_ type: UITextAutocapitalizationType) -> Self {
+        autocapitalizationType = type
+        return self
+    }
+
+    /// Sets the autocorrection style for the field.
+    /// - parameter type: The autocorrection type to use.
+    func autocorrectionType(_ type: UITextAutocorrectionType) -> Self {
+        autocorrectionType = type
+        return self
+    }
+
     /// Sets the left view of the field, optionally settings its view mode as well.
     /// - Parameters:
     ///   - view: The view to set.

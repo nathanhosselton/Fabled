@@ -53,6 +53,9 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
               TextField(playerSearchText.binding)
                 .updatesRateLimited(to: 1.0)
                 .textAlignment(.center)
+                .autocorrectionType(.no)
+                .autocapitalizationType(.none)
+                .keyboardType(.twitter) //For BattleTag hash
                 .font(Style.Font.text)
                 .fontSize(16)
                 .placeholder("Select a platform to narrow your search")
@@ -124,13 +127,19 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
     switch platform {
     case .xbox:
       field.placeholder = "Gamertag"
+      field.keyboardType = .default
     case .psn:
       field.placeholder = "PSN ID"
+      field.keyboardType = .default
     case .blizzard:
       field.placeholder = "BattleTag#1234"
+      field.keyboardType = .twitter
     case .all:
       field.placeholder = "Select a platform to narrow your search"
+      field.keyboardType = .twitter
     }
+
+    field.reloadInputViews()
   }
 
   private func onViewPressed(_ sender: UIButton) {
