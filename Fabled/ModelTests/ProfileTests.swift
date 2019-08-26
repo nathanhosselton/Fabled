@@ -367,7 +367,7 @@ class ProfileTests: XCTestCase {
 
     func testWinsToFabledWaitingForWeeklyBonusAccountsForBonusAmount() {
         let rank = GloryRank(for: GloryRank.fabled(.I).level - 1)
-        let progress = rank.pointLength - GloryRank.MatchCompletionBonusAmount - rank.baseWinPoints //=> 1 win remaining
+        let progress = rank.pointLength - rank.bonusGloryAmount - rank.baseWinPoints //=> 1 win remaining
         let history = generateStreakBreakingActivityHistory()
         let profile = generateProfile(with: [history], at: rank, progressOffset: UInt(progress))
 
@@ -419,7 +419,7 @@ class ProfileTests: XCTestCase {
         let history = generateStreakActivityHistory(for: matches, beginningWithLossAt: Date.now.rewound(m:3)) //=> 3 matches
         let profile = generateProfile(with: [history])
 
-        XCTAssert(profile.gloryAtNextWeeklyReset == profile.glory.currentProgress + GloryRank.MatchCompletionBonusAmount)
+        XCTAssert(profile.gloryAtNextWeeklyReset == profile.glory.currentProgress + profile.rank.bonusGloryAmount)
     }
 
     func testMinimumGloryAtNextWeeklyResetEqualsGloryAtNextWeeklyResetWhenBonusThresholdHasBeenMet() {
@@ -435,7 +435,7 @@ class ProfileTests: XCTestCase {
         let profile = generateProfile(at: rank, progressOffset: 200) //ensures no profile rank-down with losses
 
         let lossDeficit = rank.lossDeficit * 3
-        let expectedAmount: Int = profile.glory.currentProgress - lossDeficit + GloryRank.MatchCompletionBonusAmount
+        let expectedAmount: Int = profile.glory.currentProgress - lossDeficit + rank.bonusGloryAmount
 
         XCTAssert(profile.pessimisticGloryAtNextWeeklyReset == expectedAmount)
     }
@@ -451,7 +451,7 @@ class ProfileTests: XCTestCase {
 
             let remainingGames = 3 - gamesPlayed
             let lossDeficit = rank.lossDeficit * remainingGames
-            let expectedAmount: Int = profile.glory.currentProgress - lossDeficit + GloryRank.MatchCompletionBonusAmount
+            let expectedAmount: Int = profile.glory.currentProgress - lossDeficit + rank.bonusGloryAmount
 
             XCTAssert(profile.pessimisticGloryAtNextWeeklyReset == expectedAmount)
         }
@@ -464,7 +464,7 @@ class ProfileTests: XCTestCase {
         let profile = generateProfile(at: rank, progressOffset: UInt(progress))
 
         let lossDeficit = rank.lossDeficit + rankDown.lossDeficit * 2
-        let expectedAmount: Int = profile.glory.currentProgress - lossDeficit + GloryRank.MatchCompletionBonusAmount
+        let expectedAmount: Int = profile.glory.currentProgress - lossDeficit + rankDown.bonusGloryAmount
 
         XCTAssert(profile.pessimisticGloryAtNextWeeklyReset == expectedAmount)
     }
@@ -474,7 +474,7 @@ class ProfileTests: XCTestCase {
         let profile = generateProfile(at: rank, progressOffset: 200) //ensures no profile rank-down with losses
 
         let lossDeficit = rank.lossDeficit * 2
-        let expectedAmount: Int = profile.glory.currentProgress + rank.baseWinPoints - lossDeficit + GloryRank.MatchCompletionBonusAmount
+        let expectedAmount: Int = profile.glory.currentProgress + rank.baseWinPoints - lossDeficit + rank.bonusGloryAmount
 
         XCTAssert(profile.optimisticGloryAtNextWeeklyReset == expectedAmount)
     }
@@ -489,7 +489,7 @@ class ProfileTests: XCTestCase {
 
             let remainingGames = 2 - gamesPlayed
             let lossDeficit = rank.lossDeficit * remainingGames
-            let expectedAmount: Int = profile.glory.currentProgress + rank.baseWinPoints - lossDeficit + GloryRank.MatchCompletionBonusAmount
+            let expectedAmount: Int = profile.glory.currentProgress + rank.baseWinPoints - lossDeficit + rank.bonusGloryAmount
 
             XCTAssert(profile.optimisticGloryAtNextWeeklyReset == expectedAmount)
         }
@@ -507,7 +507,7 @@ class ProfileTests: XCTestCase {
             let remainingGames = 2 - gamesPlayed
             let lossDeficit = rank.lossDeficit * remainingGames
             let winPoints = rank.winPoints(atStreakPosition: UInt(gamesPlayed + 1))
-            let expectedAmount: Int = profile.glory.currentProgress + winPoints - lossDeficit + GloryRank.MatchCompletionBonusAmount
+            let expectedAmount: Int = profile.glory.currentProgress + winPoints - lossDeficit + rank.bonusGloryAmount
 
             XCTAssert(profile.optimisticGloryAtNextWeeklyReset == expectedAmount)
         }
@@ -520,7 +520,7 @@ class ProfileTests: XCTestCase {
         let profile = generateProfile(at: rank, progressOffset: UInt(progress))
 
         let lossDeficit = rankUp.lossDeficit * 2
-        let expectedAmount: Int = profile.glory.currentProgress + rank.baseWinPoints - lossDeficit + GloryRank.MatchCompletionBonusAmount
+        let expectedAmount: Int = profile.glory.currentProgress + rank.baseWinPoints - lossDeficit + rank.bonusGloryAmount
 
         XCTAssert(profile.optimisticGloryAtNextWeeklyReset == expectedAmount)
     }

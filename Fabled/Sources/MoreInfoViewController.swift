@@ -2,8 +2,7 @@ import UIKit
 import Model
 
 final class MoreInfoViewController: DeclarativeViewController {
-  private var threshold: Int { return GloryRank.MatchCompletionBonusThreshold }
-  private var amount: Int { return GloryRank.MatchCompletionBonusAmount }
+  private var threshold: Int { return GloryRank.WeeklyMatchCompletionThreshold }
 
   private let textSize: CGFloat = 14
   private let sectionSpacing: CGFloat = 14
@@ -35,7 +34,7 @@ final class MoreInfoViewController: DeclarativeViewController {
 
               Text("""
                 Playing \(threshold) matches within a weekly reset period awards \
-                \(amount) bonus Glory at the next weekly reset.
+                bonus Glory at the next weekly reset until Mythic rank.
                 """)
                 .styleProvider(faqBodyStyling),
 

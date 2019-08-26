@@ -101,8 +101,8 @@ public extension Profile {
     func winsToFabled(waitingForWeeklyBonus waiting: Bool) -> UInt {
         guard glory.currentProgress < GloryRank.fabled(.I).startingGlory else { return 0 }
 
-        let fabledPoints = GloryRank.fabled(.I).startingGlory - (waiting ? GloryRank.MatchCompletionBonusAmount : 0)
         var rank = GloryRank(points: glory.currentProgress)
+        let fabledPoints = GloryRank.fabled(.I).startingGlory - (waiting ? rank.bonusGloryAmount : 0)
         var wins = currentWinStreak
         var points = glory.currentProgress
 
@@ -119,7 +119,7 @@ public extension Profile {
     /// `hasMetBonusRequirementThisWeek` is `true`.
     var gloryAtNextWeeklyReset: Int {
         guard hasMetBonusRequirementThisWeek else { return glory.currentProgress }
-        return glory.currentProgress + GloryRank.MatchCompletionBonusAmount
+        return glory.currentProgress + rank.bonusGloryAmount
     }
 
     /// If the player has not yet played the minimum matches required for a Glory bonus in the current week,
@@ -161,7 +161,7 @@ public extension Profile {
             rank = GloryRank(points: points)
         }
 
-        return points + GloryRank.MatchCompletionBonusAmount
+        return points + rank.bonusGloryAmount
     }
 
     /// Returns `true` when the player will rank up at the next weekly reset based on the current Glory

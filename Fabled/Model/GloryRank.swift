@@ -19,9 +19,6 @@ public enum GloryRank {
     /// The number completed games required each week to award bonus Glory at the next weekly reset
     public static let MatchCompletionBonusThreshold = 3
 
-    /// The amount of Glory awarded at the next weekly reset after meeting the `MatchCompletionBonusThreshold`.
-    public static let MatchCompletionBonusAmount = 120
-
     /// Returns the rank `title` with the subrank formatted for display.
     var prettyPrinted: String {
         switch self {
@@ -146,6 +143,20 @@ public enum GloryRank {
     /// Returns `pointRange.upperBound` i.e. the point amount at which the rank ends.
     var endingGlory: Int {
         return pointRange.upperBound
+    }
+
+    /// The amount of Glory this rank awards at the weekly reset when the `WeeklyMatchCompletionThreshold` is met.
+    var bonusGloryAmount: Int {
+        switch self {
+        case .guardian, .brave:
+            return 160
+        case .heroic:
+            return 120
+        case .fabled:
+            return 80
+        case .mythic, .legend, .max:
+            return 0
+        }
     }
 
     /// Returns the amount of Glory that is deducted for a match loss. This value is positive.

@@ -247,6 +247,21 @@ class GloryRankTests: XCTestCase {
     }
 
     func testMatchCompletionBonusAmountReturnsExpectedAmount() {
-        XCTAssert(GloryRank.MatchCompletionBonusAmount == 120)
+        for rank in GloryRank.allRanks {
+            let bonus: Int
+            
+            switch rank {
+            case .guardian, .brave:
+                bonus = 160
+            case .heroic:
+                bonus = 120
+            case .fabled:
+                bonus = 80
+            case .mythic, .legend, .max:
+                bonus = 0
+            }
+
+            XCTAssert(rank.bonusGloryAmount == bonus)
+        }
     }
 }
