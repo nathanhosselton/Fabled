@@ -5,25 +5,25 @@ import Model
 /// Class for quickly testing and iterating on UI. Only compiled and presented when the active compiler
 /// flags `DEBUG` and `UIPREVIEW` are both set in Build Settings.
 final class DebugUIViewController: DeclarativeViewController {
-  private let currentGlory = State(initialValue: "123")
-  private let playerRank = State(initialValue: GloryRank.heroic(.III))
+  private let currentGlory = State(initialValue: "1045")
+  private let playerRank = State(initialValue: GloryRank.brave(.III))
   private lazy var playerRankText = playerRank.binding.map { String(describing: $0) }
 
-  private let gloryToNextRank = State(initialValue: 33)
+  private let gloryToNextRank = State(initialValue: 5)
   private let winsToNextRank = State<UInt>(initialValue: 1)
 
-  private let currentWinStreak = State<UInt>(initialValue: 5)
-  private let matchesPlayedThisWeek = State(initialValue: 13)
-  private let matchesWonThisWeek = State(initialValue: 8)
+  private let currentWinStreak = State<UInt>(initialValue: 1)
+  private let matchesPlayedThisWeek = State(initialValue: 2)
+  private let matchesWonThisWeek = State(initialValue: 1)
 
-  private let matchesRemainingForWeeklyBonus = State(initialValue: 0)
+  private let matchesRemainingForWeeklyBonus = State(initialValue: 1)
   private lazy var metWeeklyBonus = matchesRemainingForWeeklyBonus.binding.map { $0 == 0 }
   private let willRankUp = State(initialValue: true)
-  private let gloryAtNextWeeklyReset = State(initialValue: 2187)
-  private let optimisticGloryAtNextWeeklyReset = State(initialValue: 2135)
+  private let gloryAtNextWeeklyReset = State(initialValue: 1253)
+  private let optimisticGloryAtNextWeeklyReset = State(initialValue: 1253)
   private lazy var currentRankDecays = playerRank.binding.map { $0 >= .mythic(.I) }
 
-  private let winsToFabled = State(initialValue: "10")
+  private let winsToFabled = State(initialValue: "9")
   private lazy var winsToFabledIsZero = winsToFabled.binding.map { Int($0) == 0 }
   private lazy var moreWinsText = winsToFabled.binding.map { "  more win" + (Int($0) != 1 ? "s" : "") }
 
@@ -36,7 +36,7 @@ final class DebugUIViewController: DeclarativeViewController {
 
           //MARK: Player Name, Glory & Rank
 
-          Text("WeirdRituals")
+          Text("starmunk")
             .font(Style.Font.NeueHaasGrotesk65Medium)
             .fontSize(36)
             .adjustsFontSizeRelativeToDisplay(.x375)
