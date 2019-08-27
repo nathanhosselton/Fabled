@@ -22,9 +22,9 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   private lazy var matchesWonThisWeek = playerProfile.binding.map { $0.matchesWonThisWeek }
 
   //WeeklyBonusCard
-  private lazy var metWeeklyBonus = playerProfile.binding.map { $0.hasMetBonusRequirementThisWeek }
+  private lazy var metWeeklyBonus = playerProfile.binding.map { $0.hasMetThresholdRequirementThisWeek }
   private lazy var willRankUpAtReset = playerProfile.binding.map { $0.willRankUpAtReset }
-  private lazy var matchesRemainingForWeeklyBonus = playerProfile.binding.map { $0.matchesRemainingForWeeklyBonus }
+  private lazy var matchesRemainingForWeeklyBonus = playerProfile.binding.map { $0.matchesRemainingToWeeklyThreshold }
   private lazy var gloryAtNextWeeklyReset = playerProfile.binding.map { $0.gloryAtNextWeeklyReset }
   private lazy var optimisticGloryAtNextWeeklyReset = playerProfile.binding.map { $0.optimisticGloryAtNextWeeklyReset }
 

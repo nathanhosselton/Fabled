@@ -17,7 +17,7 @@ public enum GloryRank {
     case max
 
     /// The number completed games required each week to award bonus Glory at the next weekly reset
-    public static let MatchCompletionBonusThreshold = 3
+    public static let WeeklyMatchCompletionThreshold = 3
 
     /// Returns the rank `title` with the subrank formatted for display.
     var prettyPrinted: String {

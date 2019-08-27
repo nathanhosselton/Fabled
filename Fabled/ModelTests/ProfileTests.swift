@@ -128,7 +128,7 @@ class ProfileTests: XCTestCase {
         let history = generateStreakActivityHistory(for: matches, beginningWithLossAt: Date().rewound(m:3))
         let profile = generateProfile(with: [history])
 
-        XCTAssert(profile.matchesRemainingForWeeklyBonus == 0)
+        XCTAssert(profile.matchesRemainingToWeeklyThreshold == 0)
     }
 
     func testMatchesRemainingForWeeklyBonusReturnsCorrectAmount() {
@@ -137,7 +137,7 @@ class ProfileTests: XCTestCase {
             let history = generateStreakActivityHistory(for: matches, beginningWithLossAt: Date.distantPast)
             let profile = generateProfile(with: [history])
 
-            XCTAssert(profile.matchesRemainingForWeeklyBonus == GloryRank.MatchCompletionBonusThreshold - matchCount)
+            XCTAssert(profile.matchesRemainingToWeeklyThreshold == GloryRank.WeeklyMatchCompletionThreshold - matchCount)
         }
     }
 
@@ -386,7 +386,7 @@ class ProfileTests: XCTestCase {
         let history = generateStreakBreakingActivityHistory()
         let profile = generateProfile(with: [history])
 
-        XCTAssertFalse(profile.hasMetBonusRequirementThisWeek) //=> 1 game
+        XCTAssertFalse(profile.hasMetThresholdRequirementThisWeek) //=> 1 game
     }
 
     //Precondition: This test can incorrectly fail if run within a few minutes of the weekly reset (UTC Tues 17:00)
@@ -395,7 +395,7 @@ class ProfileTests: XCTestCase {
         let history = generateStreakActivityHistory(for: matches, beginningWithLossAt: Date.now.rewound(m:3))
         let profile = generateProfile(with: [history])
 
-        XCTAssert(profile.hasMetBonusRequirementThisWeek) //=> 3 matches
+        XCTAssert(profile.hasMetThresholdRequirementThisWeek) //=> 3 matches
     }
 
     //Precondition: This test can incorrectly fail if run within a few minutes of the weekly reset (UTC Tues 17:00)
@@ -405,7 +405,7 @@ class ProfileTests: XCTestCase {
         let character3 = generateStreakActivityHistory(for: [Date().rewound(m:3)], beginningWithLossAt: Date().rewound(m:4))
         let profile = generateProfile(with: [character1, character2, character3])
 
-        XCTAssert(profile.hasMetBonusRequirementThisWeek) //=> 5 matches
+        XCTAssert(profile.hasMetThresholdRequirementThisWeek) //=> 5 matches
     }
 
     func testGloryAtNextWeeklyResetReturnsExpectedAmountWhenBonusThresholdHasNotBeenMet() {

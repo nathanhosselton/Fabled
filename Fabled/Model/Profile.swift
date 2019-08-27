@@ -40,17 +40,17 @@ public struct Profile {
         return activityHistories.map({ $0.winsSinceWeeklyReset }).reduce(0, +)
     }
 
-    /// Returns the remaining number of matches the player must complete to meet the bonus requirement
+    /// Returns the remaining number of matches the player must complete to meet the threshold requirement
     /// for the current weekly reset period.
-    public var matchesRemainingForWeeklyBonus: Int {
-        guard matchesPlayedThisWeek < GloryRank.MatchCompletionBonusThreshold else { return 0 }
-        return GloryRank.MatchCompletionBonusThreshold - matchesPlayedThisWeek
+    public var matchesRemainingToWeeklyThreshold: Int {
+        guard matchesPlayedThisWeek < GloryRank.WeeklyMatchCompletionThreshold else { return 0 }
+        return GloryRank.WeeklyMatchCompletionThreshold - matchesPlayedThisWeek
     }
 
     /// Indicates whether the player has completed the minimum number of matches during the current
-    /// weekly reset period to earn bonus Glory at the beginning of the next weekly reset period.
-    public var hasMetBonusRequirementThisWeek: Bool {
-        return matchesPlayedThisWeek >= GloryRank.MatchCompletionBonusThreshold
+    /// weekly reset period to meet the threshold requirements for their rank (either bonus Glory or avoiding decay).
+    public var hasMetThresholdRequirementThisWeek: Bool {
+        return matchesPlayedThisWeek >= GloryRank.WeeklyMatchCompletionThreshold
     }
 
     /// The Competitive Crucible activity histories for each of the player's characters.
@@ -118,7 +118,10 @@ public extension Profile {
     /// Returns the current Glory progress, adding the weekly match completion bonus amount when
     /// `hasMetBonusRequirementThisWeek` is `true`.
     var gloryAtNextWeeklyReset: Int {
-        guard hasMetBonusRequirementThisWeek else { return glory.currentProgress }
+        //FIXME: Higher ranks incur decay until threshold is met which is not accounted for here
+        //Though I won't show this value in the app for the higher ranks, this should still
+        //be updated to be accurate. I'm unable to find the correct numbers, however.
+        guard hasMetThresholdRequirementThisWeek else { return glory.currentProgress }
         return glory.currentProgress + rank.bonusGloryAmount
     }
 
@@ -144,9 +147,9 @@ public extension Profile {
     /// projecting based on whether the next game is a win or loss. Any remaining games needed to meet the
     /// threshold after the first is assumed to be a loss.
     ///
-    /// If `hasMetBonusRequirementThisWeek` is `true`, this property returns `gloryAtNextWeeklyReset`.
+    /// If `hasMetThresholdRequirementThisWeek` is `true`, this property returns `gloryAtNextWeeklyReset`.
     internal func minimumGloryAtNextWeeklyReset(winningNextMatch withWin: Bool) -> Int {
-        guard !hasMetBonusRequirementThisWeek else { return gloryAtNextWeeklyReset }
+        guard !hasMetThresholdRequirementThisWeek else { return gloryAtNextWeeklyReset }
 
         let pointOffset = withWin ? rank.winPoints(atStreakPosition: currentWinStreak + 1) : 0
         let matchOffset = withWin ? 1 : 0
@@ -155,7 +158,7 @@ public extension Profile {
         var matches = matchesPlayedThisWeek + matchOffset
         var rank = GloryRank(points: points)
 
-        while matches < GloryRank.MatchCompletionBonusThreshold {
+        while matches < GloryRank.WeeklyMatchCompletionThreshold {
             matches += 1
             points -= rank.lossDeficit
             rank = GloryRank(points: points)

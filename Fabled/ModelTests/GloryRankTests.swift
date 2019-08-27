@@ -243,7 +243,7 @@ class GloryRankTests: XCTestCase {
     }
 
     func testMatchCompletionBonusThresholdReturnsExpectedAmount() {
-        XCTAssert(GloryRank.MatchCompletionBonusThreshold == 3)
+        XCTAssert(GloryRank.WeeklyMatchCompletionThreshold == 3)
     }
 
     func testMatchCompletionBonusAmountReturnsExpectedAmount() {
