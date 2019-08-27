@@ -3,6 +3,7 @@ import UIKit
 final class WeeklyBonusCard: CardView {
   private weak var metWeeklyBonus: Binding<Bool>!
   private weak var willRankUp: Binding<Bool>!
+  private weak var rankDecays: Binding<Bool>!
 
   private let matchesRemainingForWeeklyBonus: Binding<String>
   private let gloryAtNextWeeklyReset: Binding<String>
@@ -30,14 +31,26 @@ final class WeeklyBonusCard: CardView {
 
           Spacer(10),
 
-          Text("Matches remaining\nto weekly bonus")
-            .transforming(when: matchesRemainingIsOne) { $1.text = ($0 ? "Match" : "Matches") + " remaining\nto weekly bonus" }
-            .numberOfLines(2)
-            .fontSize(20)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-            .contentCompressionResistance(.max)
-            .contentHuggingPriority(.max, .vertical),
+          StackView(.vertical, [
+            Text("Matches remaining")
+              .transforming(when: matchesRemainingIsOne) { "Match remaining" }
+              .transforming(when: matchesRemainingIsOne, is: false) { "Matches remaining" }
+              .fontSize(20)
+              .adjustsFontSizeRelativeToDisplay(.x375)
+              .color(.white)
+              .contentCompressionResistance(.max)
+              .contentHuggingPriority(.max, .vertical),
+
+            Text("to weekly bonus")
+              .transforming(when: rankDecays) { "to avoid decay" }
+              .transforming(when: rankDecays, is: false) { "to weekly bonus" }
+              .fontSize(20)
+              .adjustsFontSizeRelativeToDisplay(.x375)
+              .color(.white)
+              .contentCompressionResistance(.max)
+              .contentHuggingPriority(.max, .vertical)
+          ])
+          .alignment(.leading),
 
           Spacer(20)
         ])
@@ -51,7 +64,7 @@ final class WeeklyBonusCard: CardView {
           Spacer(20),
 
           StackView(.vertical, [
-            //if metWeeklyBonus == false
+            //if metWeeklyBonus
 
             Text("You'll have ")
               .fontSize(17)
@@ -115,9 +128,10 @@ final class WeeklyBonusCard: CardView {
       .contentHuggingPriority(.max, .horizontal)
   }
 
-  init(bonusMet: Binding<Bool>, rankingUp: Binding<Bool>, matchesRemaining: Binding<Int>, realGlory: Binding<Int>, optimisticGlory: Binding<Int>) {
+  init(bonusMet: Binding<Bool>, rankingUp: Binding<Bool>, matchesRemaining: Binding<Int>, realGlory: Binding<Int>, optimisticGlory: Binding<Int>, currentRankDecays: Binding<Bool>) {
     metWeeklyBonus = bonusMet
     willRankUp = rankingUp
+    rankDecays = currentRankDecays
 
     matchesRemainingForWeeklyBonus = matchesRemaining.map(String.init)
     gloryAtNextWeeklyReset = realGlory.map(String.init)

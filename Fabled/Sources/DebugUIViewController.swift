@@ -21,6 +21,7 @@ final class DebugUIViewController: DeclarativeViewController {
   private let willRankUp = State(initialValue: true)
   private let gloryAtNextWeeklyReset = State(initialValue: 2187)
   private let optimisticGloryAtNextWeeklyReset = State(initialValue: 2135)
+  private lazy var currentRankDecays = playerRank.binding.map { $0 >= .mythic(.I) }
 
   private let winsToFabled = State(initialValue: "10")
   private lazy var winsToFabledIsZero = winsToFabled.binding.map { Int($0) == 0 }
@@ -64,7 +65,7 @@ final class DebugUIViewController: DeclarativeViewController {
           Spacer(DisplayScale.x375.scale(18)),
           RecentActivityCard(winStreak: currentWinStreak.binding, matchesPlayed: matchesPlayedThisWeek.binding, matchesWon: matchesWonThisWeek.binding),
           Spacer(DisplayScale.x375.scale(18)),
-          WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUp.binding, matchesRemaining: matchesRemainingForWeeklyBonus.binding, realGlory: gloryAtNextWeeklyReset.binding, optimisticGlory: optimisticGloryAtNextWeeklyReset.binding),
+          WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUp.binding, matchesRemaining: matchesRemainingForWeeklyBonus.binding, realGlory: gloryAtNextWeeklyReset.binding, optimisticGlory: optimisticGloryAtNextWeeklyReset.binding, currentRankDecays: currentRankDecays),
 
           //MARK: Wins to Fabled
 

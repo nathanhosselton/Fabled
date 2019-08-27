@@ -27,6 +27,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   private lazy var matchesRemainingForWeeklyBonus = playerProfile.binding.map { $0.matchesRemainingToWeeklyThreshold }
   private lazy var gloryAtNextWeeklyReset = playerProfile.binding.map { $0.gloryAtNextWeeklyReset }
   private lazy var optimisticGloryAtNextWeeklyReset = playerProfile.binding.map { $0.optimisticGloryAtNextWeeklyReset }
+  private lazy var currentRankDecays = playerProfile.binding.map { $0.canIncurGloryDecay }
 
   //Footer
   private lazy var winsToFabled = playerProfile.binding.map { String($0.winsToFabled) }
@@ -76,7 +77,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
           Spacer(DisplayScale.x375.scale(18)),
 
-          WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUpAtReset, matchesRemaining: matchesRemainingForWeeklyBonus, realGlory: gloryAtNextWeeklyReset, optimisticGlory: optimisticGloryAtNextWeeklyReset),
+          WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUpAtReset, matchesRemaining: matchesRemainingForWeeklyBonus, realGlory: gloryAtNextWeeklyReset, optimisticGlory: optimisticGloryAtNextWeeklyReset, currentRankDecays: currentRankDecays),
 
           //MARK: Wins to Fabled
 

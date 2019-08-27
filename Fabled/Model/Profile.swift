@@ -40,6 +40,16 @@ public struct Profile {
         return activityHistories.map({ $0.winsSinceWeeklyReset }).reduce(0, +)
     }
 
+    /// Indicates whether the player's current rank allows for earning weekly bonus Glory.
+    public var canEarnBonusGlory: Bool {
+        return rank.receivesBonusGlory
+    }
+
+    /// Indicates whether the player's current rank undergoes Glory decay when the weekly threshold isn't met.
+    public var canIncurGloryDecay: Bool {
+        return rank.hasGloryDecay
+    }
+
     /// Returns the remaining number of matches the player must complete to meet the threshold requirement
     /// for the current weekly reset period.
     public var matchesRemainingToWeeklyThreshold: Int {
@@ -170,6 +180,7 @@ public extension Profile {
     /// Returns `true` when the player will rank up at the next weekly reset based on the current Glory
     /// point projection for their profile from `optimisticGloryAtNextWeeklyReset`.
     var willRankUpAtReset: Bool {
+        guard canEarnBonusGlory else { return false }
         return GloryRank(points: optimisticGloryAtNextWeeklyReset) > rank
     }
 }

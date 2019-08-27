@@ -145,6 +145,16 @@ public enum GloryRank {
         return pointRange.upperBound
     }
 
+    /// Indicates whether weekly bonus Glory is available to this rank.
+    var receivesBonusGlory: Bool {
+        return self < .mythic(.I)
+    }
+
+    /// Indicates whether Glory decays week-over-week at this rank when the `WeeklyMatchCompletionThreshold` is not met.
+    var hasGloryDecay: Bool {
+        return !receivesBonusGlory
+    }
+
     /// The amount of Glory this rank awards at the weekly reset when the `WeeklyMatchCompletionThreshold` is met.
     var bonusGloryAmount: Int {
         switch self {

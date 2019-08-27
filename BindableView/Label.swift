@@ -50,13 +50,11 @@ public final class Label: UILabel, BindableView {
     /// - Parameters:
     ///   - binding: The boolean value binding to observe for executing the transform.
     ///   - is: Optional comparitor for the `binding`'s value. Defaults to `true`.
-    ///   - transform: A function which passes in the label's current `text` and assigns the result
-    ///     back as the new `text` value.
-    ///   - text: The label's current `text` value, passed into the transform.
-    func transforming(when binding: Binding<Bool>, is: Bool = true, _ transform: @escaping (_ text: String) -> String) -> Self {
+    ///   - transform: A function whose result is assigned as the label's new `text` value.
+    func transforming(when binding: Binding<Bool>, is: Bool = true, _ transform: @escaping () -> String) -> Self {
         binding.observe { [weak self] in
             if $0 == `is` {
-                self?.text = transform(self?.text ?? "")
+                self?.text = transform()
             }
         }
         return self
