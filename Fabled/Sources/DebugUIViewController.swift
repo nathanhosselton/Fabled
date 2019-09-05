@@ -80,11 +80,11 @@ final class DebugUIViewController: DeclarativeViewController {
           Text(moreWinsText)
             .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.white)
+            .color(Style.Color.text)
           +
           Text(" to reach Fabled")
             .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.white),
+            .color(Style.Color.text),
 
           //MARK: Change Account, Refresh, & More Info
           
@@ -95,14 +95,14 @@ final class DebugUIViewController: DeclarativeViewController {
             Button(#imageLiteral(resourceName: "logout_icon"))
 //              .observe(with: onChangePlayerPressed)
               .size(22)
-              .tintColor(.lightGray),
+              .tintColor(Style.Color.deemphasized),
 
             Spacer(48), //visual centering
 
             Button(#imageLiteral(resourceName: "refresh_icon"))
               .observe(with: onRefreshPressed)
               .size(22)
-              .tintColor(.white),
+              .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
@@ -146,14 +146,14 @@ final class DebugUIViewController: DeclarativeViewController {
   private func moreInfoButtonStyling(_ button: UIButton) {
     button.titleLabel?.font = UIFont(name: Style.Font.title, size: 16)
     button.titleEdgeInsets.top = 1
-    button.setTitleColor(.lightGray, for: .normal)
+    button.setTitleColor(Style.Color.deemphasized, for: .normal)
 
     let size: CGFloat = 22
     button.widthAnchor.constraint(equalToConstant: size).isActive = true
     button.heightAnchor.constraint(equalToConstant: size).isActive = true
 
     button.layer.cornerRadius = size / 2
-    button.layer.borderColor = UIColor.lightGray.cgColor
+    button.layer.borderColor = Style.Color.deemphasized.cgColor
     button.layer.borderWidth = 1.666
   }
 

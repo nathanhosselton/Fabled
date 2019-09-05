@@ -17,7 +17,31 @@ enum Style {
     }
 
     enum Color {
-        /// The background color to be used for views.
+        /// The background color to be used for the window and root views.
         static let background = UIColor.black
+
+        /// The color for content which which may be interactive but should be de-emphasized.
+        static let deemphasized = UIColor.lightGray
+
+        /// The color for interactive content which has been disabled.
+        static let disabled = UIColor.darkGray
+
+        /// The color for content which is interactive and enabled.
+        static let interactive = UIColor.white
+
+        /// The color to be used for neutral text.
+        static let text = UIColor.white
+
+        /// The color to be used for text of crucial note to the user.
+        static let imperativeText = UIColor.red
+
+        /// The background color to be used for `CardView`s.
+        static let cardView = UIColor(white: 0.133, alpha: 1.0)//UIColor(white: 1.0, alpha: 0.13)
+
+        /// The color to be used for standard "pill" views.
+        static let pill = UIColor(white: 0.133, alpha: 1.0)
+
+        /// The color to be used for emphasized "pill" views.
+        static let emphasizedPill = UIColor.red
     }
 }

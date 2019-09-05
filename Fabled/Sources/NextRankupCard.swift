@@ -17,7 +17,7 @@ final class NextRankupCard: CardView {
             .font(Style.Font.thicc)
             .fontSize(CardView.Font.titleSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
+            .color(Style.Color.text)
             .contentHuggingPriority(.max),
 
           Spacer(10),
@@ -27,7 +27,7 @@ final class NextRankupCard: CardView {
             .font(Style.Font.heading)
             .fontSize(CardView.Font.headingSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
+            .color(Style.Color.text)
             .contentCompressionResistance(.max)
             .contentHuggingPriority(.max, .vertical),
 
@@ -40,17 +40,17 @@ final class NextRankupCard: CardView {
         Spacer(4),
 
         Text("That's  ")
-          .color(.white)
           .fontSize(CardView.Font.bodySize)
+          .color(Style.Color.text)
         +
         Text(winsToNextRankText)
-          .color(.red)
           .font(Style.Font.heading)
           .fontSize(CardView.Font.bodySize)
+          .color(Style.Color.text)
         +
         Text(moreWinsText)
-          .color(.white),
           .fontSize(CardView.Font.bodySize)
+          .color(Style.Color.text),
 
         Spacer(8)
       ])

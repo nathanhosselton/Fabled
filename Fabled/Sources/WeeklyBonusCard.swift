@@ -25,8 +25,8 @@ final class WeeklyBonusCard: CardView {
             .font(Style.Font.thicc)
             .fontSize(CardView.Font.titleSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .transforming(when: metWeeklyBonus) { $0.textColor = .white }
-            .transforming(when: metWeeklyBonus, is: false) { $0.textColor = .red }
+            .transforming(when: metWeeklyBonus) { $0.textColor = Style.Color.text }
+            .transforming(when: metWeeklyBonus, is: false) { $0.textColor = Style.Color.imperativeText }
             .contentHuggingPriority(.max),
 
           Spacer(10),
@@ -38,7 +38,7 @@ final class WeeklyBonusCard: CardView {
               .font(Style.Font.heading)
               .fontSize(CardView.Font.headingSize)
               .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
+              .color(Style.Color.text)
               .contentCompressionResistance(.max)
               .contentHuggingPriority(.max, .vertical),
 
@@ -48,7 +48,7 @@ final class WeeklyBonusCard: CardView {
               .font(Style.Font.heading)
               .fontSize(CardView.Font.headingSize)
               .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
+              .color(Style.Color.text)
               .contentCompressionResistance(.max)
               .contentHuggingPriority(.max, .vertical)
           ])
@@ -69,44 +69,44 @@ final class WeeklyBonusCard: CardView {
             //if metWeeklyBonus
 
             Text("You'll have ")
-              .color(.white)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.text)
               .isHidden(while: metWeeklyBonus, is: false)
             +
             Text(gloryAtNextWeeklyReset)
-              .color(.white)
               .font(Style.Font.heading)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.text)
               .isHidden(while: metWeeklyBonus, is: false)
             +
             Text(" Glory at next reset")
-              .color(.white)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.text)
               .isHidden(while: metWeeklyBonus, is: false),
 
             //else
 
             Text("Win your next match for at least ")
-              .color(.white)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.text)
               .isHidden(while: metWeeklyBonus),
 
             Text(optimisticGloryAtNextWeeklyReset)
-              .color(.white)
               .font(Style.Font.heading)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.text)
               .isHidden(while: metWeeklyBonus)
             +
             Text(" Glory at next reset")
-              .color(.white)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.text)
               .isHidden(while: metWeeklyBonus),
 
             Spacer(2),
 
             Text(rankingUpText)
-              .color(.red)
               .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.imperativeText)
 
             //endif
           ])

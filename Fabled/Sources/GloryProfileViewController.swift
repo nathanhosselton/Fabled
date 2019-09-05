@@ -46,24 +46,24 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
             .font(Style.Font.title)
             .fontSize(36)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white),
+            .color(Style.Color.text),
 
           Spacer(DisplayScale.x375.scale(8)),
 
           Text(currentGlory)
             .fontSize(22)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
+            .color(Style.Color.text)
           +
           Text(" Glory   —   ")
             .fontSize(22)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
+            .color(Style.Color.text)
           +
           Text(playerRank)
             .fontSize(22)
             .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.red),
+            .color(Style.Color.imperativeText),
 
           Spacer(DisplayScale.x320.scale(12)),
 
@@ -86,17 +86,17 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
           Text(winsToFabled)
             .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
-            .transforming(when: winsToFabledIsZero) { $0.textColor = .white }
-            .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = .red }
+            .transforming(when: winsToFabledIsZero) { $0.textColor = Style.Color.text }
+            .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = Style.Color.imperativeText }
           +
           Text(moreWinsText)
             .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.white)
+            .color(Style.Color.text)
           +
           Text(" to reach Fabled")
             .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.white),
+            .color(Style.Color.text),
 
           //MARK: Change Account, Refresh, & More Info
 
@@ -106,14 +106,14 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
             Button(#imageLiteral(resourceName: "logout_icon"))
               .observe(with: onChangePlayerPressed)
               .size(22)
-              .tintColor(.lightGray),
+              .tintColor(Style.Color.deemphasized),
 
             Spacer(48), //visual centering
 
             Button(#imageLiteral(resourceName: "refresh_icon"))
               .observe(with: onRefreshPressed)
               .size(22)
-              .tintColor(.white),
+              .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
@@ -146,14 +146,14 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   private func moreInfoButtonStyling(_ button: UIButton) {
     button.titleLabel?.font = UIFont(name: Style.Font.title, size: 16)
     button.titleEdgeInsets.top = 1
-    button.setTitleColor(.lightGray, for: .normal)
+    button.setTitleColor(Style.Color.deemphasized, for: .normal)
 
     let size: CGFloat = 22
     button.widthAnchor.constraint(equalToConstant: size).isActive = true
     button.heightAnchor.constraint(equalToConstant: size).isActive = true
 
     button.layer.cornerRadius = size / 2
-    button.layer.borderColor = UIColor.lightGray.cgColor
+    button.layer.borderColor = Style.Color.deemphasized.cgColor
     button.layer.borderWidth = 1.666
   }
 

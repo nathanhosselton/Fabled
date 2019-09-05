@@ -12,7 +12,7 @@ class CardView: UIView {
 
     //Rounded bg color for "card"
     let color = UIView()
-    color.backgroundColor = UIColor(white: 1.0, alpha: 0.13)
+    color.backgroundColor = Style.Color.cardView
     color.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     color.layer.cornerRadius = 10
 

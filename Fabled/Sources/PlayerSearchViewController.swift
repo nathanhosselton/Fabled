@@ -24,13 +24,13 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
             Text("Fabled")
               .font(Style.Font.title)
               .fontSize(40)
-              .color(.white),
+              .color(Style.Color.text),
 
             Spacer(4),
 
             Text("Destiny 2 Glory Tracker")
-              .color(.white),
               .font(Style.Font.body)
+              .color(Style.Color.text),
           ])
           .alignment(.center)
           .offset(.vertical, -26), //Inset title text into image view
@@ -41,10 +41,10 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
           StackView(.vertical, [
             SegmentedControl(playerSearchPlatform.binding)
-              .titleColor(.white)
               .font(Style.Font.body)
+              .titleColor(Style.Color.text)
               .titleColor(.black, while: .selected, .highlighted)
-              .tintColor(.white)
+              .tintColor(Style.Color.interactive)
               .backgroundColor(.clear),
 
             Spacer(32 + 8), //+8 accounts for "View Glory" button's label inset
@@ -62,9 +62,9 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
                 .fontSize(15)
                 .placeholder("Select a platform to narrow your search")
                 .transforming(when: playerSearchPlatform.binding, updatePlayerSearchFieldPlaceholder)
-                .placeholderColor(.lightGray)
-                .textColor(.white)
-                .cursorColor(.white)
+                .placeholderColor(Style.Color.deemphasized)
+                .textColor(Style.Color.text)
+                .cursorColor(Style.Color.interactive)
                 .rightView(playerSearchActivityIndicator, mode: .always)
                 .endEditingOnReturn()
             ]),
@@ -79,8 +79,8 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
                 .isEnabled(when: player.binding) { $0 != nil }
                 .font(Style.Font.heading)
                 .fontSize(17)
-                .titleColor(.white)
-                .titleColor(.darkGray, while: .disabled),
+                .titleColor(Style.Color.text)
+                .titleColor(Style.Color.disabled, while: .disabled),
 
               Spacer(8),
 
