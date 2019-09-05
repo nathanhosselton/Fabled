@@ -22,8 +22,8 @@ final class WeeklyBonusCard: CardView {
           Spacer(20),
 
           Text(matchesRemainingForWeeklyBonus)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(60)
+            .font(Style.Font.thicc)
+            .fontSize(CardView.Font.titleSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .transforming(when: metWeeklyBonus) { $0.textColor = .white }
             .transforming(when: metWeeklyBonus, is: false) { $0.textColor = .red }
@@ -35,7 +35,8 @@ final class WeeklyBonusCard: CardView {
             Text("Matches remaining")
               .transforming(when: matchesRemainingIsOne) { "Match remaining" }
               .transforming(when: matchesRemainingIsOne, is: false) { "Matches remaining" }
-              .fontSize(20)
+              .font(Style.Font.heading)
+              .fontSize(CardView.Font.headingSize)
               .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
               .contentCompressionResistance(.max)
@@ -44,7 +45,8 @@ final class WeeklyBonusCard: CardView {
             Text("to weekly bonus")
               .transforming(when: rankDecays) { "to avoid decay" }
               .transforming(when: rankDecays, is: false) { "to weekly bonus" }
-              .fontSize(20)
+              .font(Style.Font.heading)
+              .fontSize(CardView.Font.headingSize)
               .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
               .contentCompressionResistance(.max)
@@ -67,51 +69,44 @@ final class WeeklyBonusCard: CardView {
             //if metWeeklyBonus
 
             Text("You'll have ")
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
+              .fontSize(CardView.Font.bodySize)
               .isHidden(while: metWeeklyBonus, is: false)
             +
             Text(gloryAtNextWeeklyReset)
-              .font(Style.Font.NeueHaasGrotesk65Medium)
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
+              .font(Style.Font.heading)
+              .fontSize(CardView.Font.bodySize)
               .isHidden(while: metWeeklyBonus, is: false)
             +
             Text(" Glory at next reset")
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
+              .fontSize(CardView.Font.bodySize)
               .isHidden(while: metWeeklyBonus, is: false),
 
             //else
 
             Text("Win your next match for at least ")
               .color(.white)
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
+              .fontSize(CardView.Font.bodySize)
               .isHidden(while: metWeeklyBonus),
 
             Text(optimisticGloryAtNextWeeklyReset)
-              .font(Style.Font.NeueHaasGrotesk65Medium)
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
+              .font(Style.Font.heading)
+              .fontSize(CardView.Font.bodySize)
               .isHidden(while: metWeeklyBonus)
             +
             Text(" Glory at next reset")
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.white)
+              .fontSize(CardView.Font.bodySize)
               .isHidden(while: metWeeklyBonus),
 
             Spacer(2),
 
             Text(rankingUpText)
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
               .color(.red)
+              .fontSize(CardView.Font.bodySize)
 
             //endif
           ])

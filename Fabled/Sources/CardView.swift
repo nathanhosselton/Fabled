@@ -37,3 +37,12 @@ class CardView: UIView {
     ])
   }
 }
+
+extension CardView {
+  /// A collection of standard font related constants for `CardView`s.
+  enum Font {
+    static let titleSize: CGFloat = 60
+    static let headingSize: CGFloat = 20
+    static let bodySize: CGFloat = 15
+  }
+}

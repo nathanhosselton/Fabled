@@ -37,7 +37,7 @@ final class DebugUIViewController: DeclarativeViewController {
           //MARK: Player Name, Glory & Rank
 
           Text("starmunk")
-            .font(Style.Font.NeueHaasGrotesk65Medium)
+            .font(Style.Font.title)
             .fontSize(36)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white),
@@ -55,7 +55,7 @@ final class DebugUIViewController: DeclarativeViewController {
             .color(.white)
           +
           Text(playerRankText)
-            .fontSize(24)
+            .fontSize(22)
             .adjustsFontSizeRelativeToDisplay(.x320)
             .color(.red),
 
@@ -72,13 +72,13 @@ final class DebugUIViewController: DeclarativeViewController {
           Spacer(DisplayScale.x320.scale(12)),
 
           Text(winsToFabled.binding)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
+            .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
             .transforming(when: winsToFabledIsZero) { $0.textColor = .white }
             .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = .red }
           +
           Text(moreWinsText)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
+            .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
             .color(.white)
           +
@@ -144,7 +144,7 @@ final class DebugUIViewController: DeclarativeViewController {
   }
 
   private func moreInfoButtonStyling(_ button: UIButton) {
-    button.titleLabel?.font = UIFont(name: Style.Font.NeueHaasGrotesk65Medium, size: 14)
+    button.titleLabel?.font = UIFont(name: Style.Font.title, size: 16)
     button.titleEdgeInsets.top = 1
     button.setTitleColor(.lightGray, for: .normal)
 

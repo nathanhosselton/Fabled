@@ -43,7 +43,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
           //MARK: Player Name, Glory & Rank
 
           Text(playerName)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
+            .font(Style.Font.title)
             .fontSize(36)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white),
@@ -61,7 +61,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
             .color(.white)
           +
           Text(playerRank)
-            .fontSize(24)
+            .fontSize(22)
             .adjustsFontSizeRelativeToDisplay(.x320)
             .color(.red),
 
@@ -84,13 +84,13 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
           Spacer(DisplayScale.x320.scale(12)),
 
           Text(winsToFabled)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
+            .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
             .transforming(when: winsToFabledIsZero) { $0.textColor = .white }
             .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = .red }
           +
           Text(moreWinsText)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
+            .font(Style.Font.heading)
             .adjustsFontSizeRelativeToDisplay(.x320)
             .color(.white)
           +
@@ -139,12 +139,12 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Style.Color.background
-    //FIXME: Build into `DeclarativeViewController`
+    //TODO: Make `DeclarativeViewController` auto-broadcast its `State`
     playerProfile.broadcast()
   }
 
   private func moreInfoButtonStyling(_ button: UIButton) {
-    button.titleLabel?.font = UIFont(name: Style.Font.NeueHaasGrotesk65Medium, size: 14)
+    button.titleLabel?.font = UIFont(name: Style.Font.title, size: 16)
     button.titleEdgeInsets.top = 1
     button.setTitleColor(.lightGray, for: .normal)
 

@@ -25,8 +25,6 @@
 		0D0B60F022E679C5009D0FEF /* PlayerSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B60EF22E679C5009D0FEF /* PlayerSearchViewController.swift */; };
 		0D0B60F222E688AF009D0FEF /* exts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B60F122E688AF009D0FEF /* exts.swift */; };
 		0D132340230368140000774D /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D13233F230368140000774D /* Style.swift */; };
-		0D13234823037E2B0000774D /* NeueHaasGroteskRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D13234623037E2B0000774D /* NeueHaasGroteskRegular.ttf */; };
-		0D13234923037E2B0000774D /* NeueHaasGroteskMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D13234723037E2B0000774D /* NeueHaasGroteskMedium.ttf */; };
 		0D1DBFA622F8B59E0084F459 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1DBF9D22F8B59D0084F459 /* Model.framework */; };
 		0D1DBFB222F8B59E0084F459 /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D1DBF9D22F8B59D0084F459 /* Model.framework */; };
 		0D1DBFC122F8B78A0084F459 /* GloryRankTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DBFBB22F8B78A0084F459 /* GloryRankTests.swift */; };
@@ -138,8 +136,6 @@
 		0D0D7EE222E79310009388CD /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		0D0D7EE322E79310009388CD /* PMKFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PMKFoundation.framework; path = Carthage/Build/iOS/PMKFoundation.framework; sourceTree = "<group>"; };
 		0D13233F230368140000774D /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Style.swift; path = Sources/Style.swift; sourceTree = "<group>"; };
-		0D13234623037E2B0000774D /* NeueHaasGroteskRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NeueHaasGroteskRegular.ttf; sourceTree = "<group>"; };
-		0D13234723037E2B0000774D /* NeueHaasGroteskMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NeueHaasGroteskMedium.ttf; sourceTree = "<group>"; };
 		0D1DBF9D22F8B59D0084F459 /* Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1DBFA022F8B59D0084F459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D1DBFA522F8B59D0084F459 /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,7 +264,6 @@
 				0D0B60CC22E660B6009D0FEF /* Info.plist */,
 				0D0B60C922E660B6009D0FEF /* LaunchScreen.storyboard */,
 				0D70F8C422EA42F10025C83D /* PRIVATE_KEYS.swift */,
-				0D13234123037C090000774D /* Fonts */,
 			);
 			name = "…";
 			sourceTree = "<group>";
@@ -300,15 +295,6 @@
 			);
 			path = State;
 			sourceTree = SOURCE_ROOT;
-		};
-		0D13234123037C090000774D /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				0D13234723037E2B0000774D /* NeueHaasGroteskMedium.ttf */,
-				0D13234623037E2B0000774D /* NeueHaasGroteskRegular.ttf */,
-			);
-			path = Fonts;
-			sourceTree = "<group>";
 		};
 		0D1DBF9E22F8B59D0084F459 /* Model */ = {
 			isa = PBXGroup;
@@ -523,9 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D0B60CB22E660B6009D0FEF /* LaunchScreen.storyboard in Resources */,
-				0D13234823037E2B0000774D /* NeueHaasGroteskRegular.ttf in Resources */,
 				0D0B60C822E660B6009D0FEF /* Assets.xcassets in Resources */,
-				0D13234923037E2B0000774D /* NeueHaasGroteskMedium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

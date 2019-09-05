@@ -22,15 +22,15 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
           StackView(.vertical, [
             Text("Fabled")
-              .font(Style.Font.NeueHaasGrotesk65Medium)
+              .font(Style.Font.title)
               .fontSize(40)
               .color(.white),
 
             Spacer(4),
 
             Text("Destiny 2 Glory Tracker")
-              .font(Style.Font.text)
               .color(.white),
+              .font(Style.Font.body)
           ])
           .alignment(.center)
           .offset(.vertical, -26), //Inset title text into image view
@@ -41,8 +41,8 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
           StackView(.vertical, [
             SegmentedControl(playerSearchPlatform.binding)
-              .font(Style.Font.text)
               .titleColor(.white)
+              .font(Style.Font.body)
               .titleColor(.black, while: .selected, .highlighted)
               .tintColor(.white)
               .backgroundColor(.clear),
@@ -58,8 +58,8 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
                 .autocorrectionType(.no)
                 .autocapitalizationType(.none)
                 .keyboardType(.twitter) //For BattleTag hash
-                .font(Style.Font.text)
-                .fontSize(16)
+                .font(Style.Font.body)
+                .fontSize(15)
                 .placeholder("Select a platform to narrow your search")
                 .transforming(when: playerSearchPlatform.binding, updatePlayerSearchFieldPlaceholder)
                 .placeholderColor(.lightGray)
@@ -77,7 +77,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
               Button("View Glory Profile")
                 .observe(with: onViewPressed)
                 .isEnabled(when: player.binding) { $0 != nil }
-                .font(Style.Font.NeueHaasGrotesk65Medium)
+                .font(Style.Font.heading)
                 .fontSize(17)
                 .titleColor(.white)
                 .titleColor(.darkGray, while: .disabled),

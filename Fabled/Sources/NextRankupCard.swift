@@ -14,8 +14,8 @@ final class NextRankupCard: CardView {
           Spacer(20),
 
           Text(gloryToNextRankText)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(60)
+            .font(Style.Font.thicc)
+            .fontSize(CardView.Font.titleSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white)
             .contentHuggingPriority(.max),
@@ -24,7 +24,8 @@ final class NextRankupCard: CardView {
 
           Text("Glory to next\nrank-up")
             .numberOfLines(2)
-            .fontSize(20)
+            .font(Style.Font.heading)
+            .fontSize(CardView.Font.headingSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white)
             .contentCompressionResistance(.max)
@@ -39,20 +40,17 @@ final class NextRankupCard: CardView {
         Spacer(4),
 
         Text("That's  ")
-          .fontSize(17)
-          .adjustsFontSizeRelativeToDisplay(.x375)
           .color(.white)
+          .fontSize(CardView.Font.bodySize)
         +
         Text(winsToNextRankText)
-          .font(Style.Font.NeueHaasGrotesk65Medium)
-          .fontSize(20)
-          .adjustsFontSizeRelativeToDisplay(.x375)
           .color(.red)
+          .font(Style.Font.heading)
+          .fontSize(CardView.Font.bodySize)
         +
         Text(moreWinsText)
-          .fontSize(17)
-          .adjustsFontSizeRelativeToDisplay(.x375)
           .color(.white),
+          .fontSize(CardView.Font.bodySize)
 
         Spacer(8)
       ])

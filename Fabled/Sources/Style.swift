@@ -3,20 +3,17 @@ import UIKit.UIColor
 /// Namespace for app-wide constants relating to UI styling and configuration.
 enum Style {
     enum Font {
-        static let NeueHaasGrotesk65Medium = "NHaasGroteskDSW02-65Md"
-        static let NeueHaasGrotesk55Regular = "NHaasGroteskDSW02-55Rg"
+        /// The type family used for body text.
+        static let body = UIFont.systemFont(ofSize: 16, weight: .regular).fontName //.SFUIText
 
-        /// The base type family used for standard text.
-        static let text = NeueHaasGrotesk55Regular
+        /// The type family used for heading text.
+        static let heading = UIFont.systemFont(ofSize: 20, weight: .medium).fontName //.SFUIDisplay-Medium
 
-        static var standardFontDescriptor: UIFontDescriptor {
-            var attr: [UIFontDescriptor.AttributeName : Any] = [:]
-            attr[.name] = NeueHaasGrotesk55Regular
-            attr[.traits] = [UIFontDescriptor.TraitKey.slant: NSNumber(floatLiteral: 1.0)]
-            return UIFontDescriptor(fontAttributes: attr)
-        }
+        /// The type family used for title text.
+        static let title = UIFont.systemFont(ofSize: 20, weight: .semibold).fontName //.SFUIDisplay-Semibold
 
-        static let minimumScaleFactor: CGFloat = 0.666
+        /// The type family used for **T H I C C** text.
+        static let thicc = UIFont.systemFont(ofSize: 20, weight: .bold).fontName //.SFUIDisplay-Bold
     }
 
     enum Color {

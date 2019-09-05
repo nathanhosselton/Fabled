@@ -13,7 +13,8 @@ final class RecentActivityCard: CardView {
         StackView(.horizontal, [
           Text("Current win\nstreak")
             .numberOfLines(2)
-            .fontSize(20)
+            .font(Style.Font.heading)
+            .fontSize(CardView.Font.headingSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .alignment(.right)
             .color(.white)
@@ -23,8 +24,8 @@ final class RecentActivityCard: CardView {
           Spacer(10),
 
           Text(currentWinStreak)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(60)
+            .font(Style.Font.thicc)
+            .fontSize(CardView.Font.titleSize)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white)
             .contentHuggingPriority(.max)
@@ -38,21 +39,18 @@ final class RecentActivityCard: CardView {
         StackView(.horizontal, [
           Spacer(20),
 
-          Text("You've played  ")
-            .fontSize(17)
-            .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white)
+          Text("You've played ")
+            .fontSize(CardView.Font.bodySize)
           +
           Text(matchesPlayedThisWeek)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(20)
-            .adjustsFontSizeRelativeToDisplay(.x375)
             .color(.white)
+            .font(Style.Font.heading)
+            .fontSize(CardView.Font.bodySize)
           +
-          Text("  matches this week")
-          .fontSize(17)
-          .adjustsFontSizeRelativeToDisplay(.x375)
           .color(.white),
+          Text(" matches this week")
+          .fontSize(CardView.Font.bodySize)
 
           Spacer(20)
         ])
@@ -60,16 +58,14 @@ final class RecentActivityCard: CardView {
 
         Spacer(2),
 
-        Text("Winning  ")
-          .fontSize(17)
-          .adjustsFontSizeRelativeToDisplay(.x375)
           .color(.white)
+        Text("Winning ")
+          .fontSize(CardView.Font.bodySize)
         +
         Text(matchesWonThisWeek)
-          .font(Style.Font.NeueHaasGrotesk65Medium)
-          .fontSize(20)
-          .adjustsFontSizeRelativeToDisplay(.x375)
           .color(.white),
+          .font(Style.Font.heading)
+          .fontSize(CardView.Font.bodySize)
 
         Spacer(8)
       ])
