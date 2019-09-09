@@ -167,7 +167,7 @@
 		0DD326FB23076ED300E7C3FB /* DebugUIViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = DebugUIViewController.swift; path = Sources/DebugUIViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		0DD326FD230770AD00E7C3FB /* NextRankupCard.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = NextRankupCard.swift; path = Sources/NextRankupCard.swift; sourceTree = "<group>"; tabWidth = 2; };
 		0DD38581230E25A900FF4B04 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingViewController.swift; path = Sources/LoadingViewController.swift; sourceTree = "<group>"; };
-		0DFA668E23089D2600626A66 /* CardView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Sources/CardView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		0DFA668E23089D2600626A66 /* CardView.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = Sources/CardView.swift; sourceTree = "<group>"; tabWidth = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

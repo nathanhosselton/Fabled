@@ -44,4 +44,12 @@ enum Style {
         /// The color to be used for emphasized "pill" views.
         static let emphasizedPill = UIColor.red
     }
+
+    enum Layout {
+        /// The standard distance to set for large spacing amounts.
+        static let largeSpacing: CGFloat = DisplayScale.x375.scale(24)
+
+        /// The standard distance to set for medium spacing amounts.
+        static let mediumSpacing: CGFloat = 12
+    }
 }
