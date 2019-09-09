@@ -136,7 +136,7 @@ public class StackView: UIStackView, DeclarativeView {
         //render our own implementation inconsistent. So I've chosen to not support the iOS 11
         //API at all. All spacing is set via our transparent Spacer views, even spacing added by
         //our general `spacing` function. This way, our implementation is both simple and consistent.
-        //If issues arise in the future, I will revist.
+        //If issues arise in the future, I will revisit.
 
         var lastFlexibleSpacer: UIView?
         for view in arrangedSubviews {
@@ -159,6 +159,14 @@ public class StackView: UIStackView, DeclarativeView {
                 }
                 lastFlexibleSpacer = view
             }
+        }
+    }
+
+    override public func insertArrangedSubview(_ view: UIView, at stackIndex: Int) {
+        super.insertArrangedSubview(view, at: stackIndex)
+
+        if let spacer = view as? Spacer {
+            spacer.setAxis(axis)
         }
     }
 

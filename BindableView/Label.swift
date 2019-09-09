@@ -42,6 +42,37 @@ public final class Label: UILabel, BindableView {
         font = Label.defaultFont
     }
 
+    /// A convenience initializer that takes a `String` binding and adjacent constants which are
+    /// concatenated to the binding value each update.
+    /// - Parameters:
+    ///     - prefix: The string value to prepend to the binding value.
+    ///     - binding: The value binding used to update this view's `text` property.
+    ///     - suffix: The string value to append to the binding value.
+    init(_ prefix: String, _ binding: Binding<String>, _ suffix: String) {
+        self.binding = binding
+        super.init(frame: .zero)
+        font = Label.defaultFont
+        binding.observe { [weak self] in self?.text = prefix + $0 + suffix}
+    }
+
+    /// A convenience initializer that takes a `String` binding and an adjacent constant that is
+    /// concatenated to the binding value each update.
+    /// - Parameters:
+    ///     - prefix: The string value to prepend to the binding value.
+    ///     - binding: The value binding used to update this view's `text` property.
+    convenience init(_ prefix: String, _ binding: Binding<String>) {
+        self.init(prefix, binding, "")
+    }
+
+    /// A convenience initializer that takes a `String` binding and an adjacent constant that is
+    /// concatenated to the binding value each update.
+    /// - Parameters:
+    ///     - binding: The value binding used to update this view's `text` property.
+    ///     - suffix: The string value to append to the binding value.
+    convenience init(_ binding: Binding<String>, _ suffix: String) {
+        self.init("", binding, suffix)
+    }
+
     /// Performs the provided transform to this label's `text` when the condition is met.
     ///
     /// Observes the provided binding, checking its value when updated and conditionally executing the
@@ -64,6 +95,41 @@ public final class Label: UILabel, BindableView {
     /// - parameter alignment: The alignment to be used.
     func alignment(_ alignment: NSTextAlignment) -> Self {
         textAlignment = alignment
+        return self
+    }
+
+    /// Sets the baseline adjustment of the text within the Label.
+    /// - parameter baseline: The baseline adjustment to be used.
+    func baselineAdjustment(_ baseline: UIBaselineAdjustment) -> Self {
+        baselineAdjustment = baseline
+        return self
+    }
+
+    /// Sets the kerning of this label's text.
+    ///
+    /// If the label has static text, the kerning is immediately set. If the label receives its text from
+    /// a binding, the binding is observed and kerning is set on each update.
+    /// - parameter amount: The amount of kerning to apply.
+    func kerning(_ amount: CGFloat) -> Self {
+        let kern: (String) -> Void = { [weak self] text in
+            let kerned: NSMutableAttributedString
+
+            if let attributed = self?.attributedText {
+                kerned = NSMutableAttributedString(attributedString: attributed)
+            } else {
+                kerned = NSMutableAttributedString(string: text)
+            }
+
+            kerned.addAttribute(.kern, value: amount, range: NSRange(location: 0, length: kerned.length))
+            self?.attributedText = kerned
+        }
+
+        if let text = text, text.count > 0 {
+            kern(text)
+        }
+
+        binding?.observe(with: kern)
+
         return self
     }
 
@@ -215,10 +281,24 @@ enum DisplayScale: CGFloat {
     }
 }
 
+extension UIScreen {
+    /// The `DisplayScale` that will be used on this device based on its screen size.
+    var displayScale: DisplayScale {
+        switch bounds.width {
+        case 320.0: return .x320
+        case 375.0: return .x375
+        case 414.0: return .x414
+        case 1024.0: return .x1024
+        case 1112.0: return .x1112
+        default:
+            return .any
+        }
+    }
+}
+
 extension Label {
     static func + (lhs: Label, rhs: Label) -> UIStackView {
         return UIStackView(arrangedSubviews: [lhs, rhs])
-//        return StackView(.horizontal, arrangedSubviews: [lhs, rhs])
     }
 
     static func + (lhs: UIStackView, rhs: Label) -> UIStackView {

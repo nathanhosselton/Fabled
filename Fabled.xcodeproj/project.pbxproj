@@ -43,6 +43,7 @@
 		0D1DBFED22F8C5EE0084F459 /* Bungie.net.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DBFC922F8B83A0084F459 /* Bungie.net.swift */; };
 		0D1DBFEE22F8C6690084F459 /* PMKFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0D7EE322E79310009388CD /* PMKFoundation.framework */; };
 		0D1DBFEF22F8C6690084F459 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0D7EE222E79310009388CD /* PromiseKit.framework */; };
+		0D25377A2322FBB30029B18C /* Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2537792322FBB30029B18C /* Conditional.swift */; };
 		0D55DAFA2310351B00374ED9 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D55DAF92310351B00374ED9 /* View.swift */; };
 		0D55DAFC2310373100374ED9 /* DeclarativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D55DAFB2310373100374ED9 /* DeclarativeView.swift */; };
 		0D70F8C522EA42F10025C83D /* PRIVATE_KEYS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D70F8C422EA42F10025C83D /* PRIVATE_KEYS.swift */; };
@@ -155,6 +156,7 @@
 		0D1DBFDD22F8C3CC0084F459 /* AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D1DBFE122F8C3CC0084F459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D1DBFE722F8C41C0084F459 /* BungieTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BungieTests.swift; sourceTree = "<group>"; };
+		0D2537792322FBB30029B18C /* Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conditional.swift; sourceTree = "<group>"; };
 		0D55DAF92310351B00374ED9 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		0D55DAFB2310373100374ED9 /* DeclarativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclarativeView.swift; sourceTree = "<group>"; };
 		0D70F8C422EA42F10025C83D /* PRIVATE_KEYS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRIVATE_KEYS.swift; sourceTree = SOURCE_ROOT; };
@@ -281,6 +283,7 @@
 				0D0B60DF22E66414009D0FEF /* Button.swift */,
 				0D0B60DC22E66414009D0FEF /* SegmentedControl.swift */,
 				0DB0D2E3230B958F00BA719E /* Scrollable.swift */,
+				0D2537792322FBB30029B18C /* Conditional.swift */,
 				0D0B60D922E66414009D0FEF /* extentions.swift */,
 			);
 			path = BindableView;
@@ -563,6 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D25377A2322FBB30029B18C /* Conditional.swift in Sources */,
 				0D55DAFA2310351B00374ED9 /* View.swift in Sources */,
 				0D0781FA22FC897D006426FD /* Error.swift in Sources */,
 				0D0781F822FC8390006426FD /* RootPresentationViewController.swift in Sources */,
