@@ -126,7 +126,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
   }
 
   /// Text field transform when selected platform updates.
-  private func updatePlayerSearchFieldPlaceholder(_ platform: Platform, _ field: TextField) {
+  private var updatePlayerSearchFieldPlaceholder: (Platform, TextField) -> Void = { platform, field in
     switch platform {
     case .xbox:
       field.placeholder = "Gamertag"

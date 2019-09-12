@@ -77,7 +77,8 @@ public final class Label: UILabel, BindableView {
     ///
     /// Observes the provided binding, checking its value when updated and conditionally executing the
     /// provided transform, setting its returned value as the new `text` for the label.
-    /// - Important: The provided binding is **not** retained.
+    /// - Important: The provided binding is not retained, but the transform _is_. Do not
+    ///     pass methods without proper consideration for retain cycles.
     /// - Parameters:
     ///   - binding: The boolean value binding to observe for executing the transform.
     ///   - is: Optional comparitor for the `binding`'s value. Defaults to `true`.

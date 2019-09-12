@@ -44,7 +44,8 @@ extension BindableView {
     /// provided transform. Useful where there are conditional states on the view that cannot be
     /// updated via its primary `binding`, such as changing a color or font value.
     ///
-    /// - Important: The provided binding is **not** retained.
+    /// - Important: The provided binding is not retained, but the transform _is_. Do not
+    ///     pass methods without proper consideration for retain cycles.
     ///
     /// - Parameters:
     ///   - binding: The boolean value binding to observe for executing the transform.
@@ -67,7 +68,8 @@ extension BindableView {
     /// conditional states on the view that cannot be updated via its primary `binding`,
     /// such as changing a color or font value.
     ///
-    /// - Important: The provided binding is **not** retained.
+    /// - Important: The provided binding is not retained, but the transform _is_. Do not
+    ///     pass methods without proper consideration for retain cycles.
     ///
     /// - Parameters:
     ///   - binding: The value binding to observe for executing the transform.

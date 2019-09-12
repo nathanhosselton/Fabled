@@ -140,7 +140,6 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Style.Color.background
-    //TODO: Make `DeclarativeViewController` auto-broadcast its `State`
     playerProfile.broadcast()
   }
 
