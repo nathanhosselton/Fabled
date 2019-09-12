@@ -103,23 +103,24 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
           Spacer(.flexible),
 
           StackView(.horizontal, [
-            Button(#imageLiteral(resourceName: "logout_icon"))
+            Button(#imageLiteral(resourceName: "escape_regular_m"))
               .observe(with: onChangePlayerPressed)
               .size(22)
               .tintColor(Style.Color.deemphasized),
 
-            Spacer(48), //visual centering
+            Spacer(50),
 
-            Button(#imageLiteral(resourceName: "refresh_icon"))
+            Button(#imageLiteral(resourceName: "refresh_regular_m"))
               .observe(with: onRefreshPressed)
               .size(22)
               .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
-            Button("?")
+            Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .styleProvider(moreInfoButtonStyling)
+              .size(23)
+              .tintColor(Style.Color.deemphasized),
           ])
           .adjustsSpacingRelativeToDisplay(.x320)
           .alignment(.center)
@@ -141,20 +142,6 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
     view.backgroundColor = Style.Color.background
     //TODO: Make `DeclarativeViewController` auto-broadcast its `State`
     playerProfile.broadcast()
-  }
-
-  private func moreInfoButtonStyling(_ button: UIButton) {
-    button.titleLabel?.font = UIFont(name: Style.Font.title, size: 16)
-    button.titleEdgeInsets.top = 1
-    button.setTitleColor(Style.Color.deemphasized, for: .normal)
-
-    let size: CGFloat = 22
-    button.widthAnchor.constraint(equalToConstant: size).isActive = true
-    button.heightAnchor.constraint(equalToConstant: size).isActive = true
-
-    button.layer.cornerRadius = size / 2
-    button.layer.borderColor = Style.Color.deemphasized.cgColor
-    button.layer.borderWidth = 1.666
   }
 
   private func onChangePlayerPressed() {
