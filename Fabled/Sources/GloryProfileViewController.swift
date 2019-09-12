@@ -9,7 +9,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
   //Header
   private lazy var playerName = playerProfile.binding.map { $0.player.displayName }
-  private lazy var playerRank = playerProfile.binding.map { $0.rankText }
+  private lazy var playerRank = playerProfile.binding.map { $0.rankText.uppercased() }
   private lazy var currentGlory = playerProfile.binding.map { String($0.glory.currentProgress) }
 
   //NextRankUpCard
@@ -32,7 +32,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   //Footer
   private lazy var winsToFabled = playerProfile.binding.map { String($0.winsToFabled) }
   private lazy var winsToFabledIsZero = playerProfile.binding.map { $0.winsToFabled == 0 }
-  private lazy var moreWinsText = playerProfile.binding.map { "  more win" + ($0.winsToFabled != 1 ? "s" : "") }
+  private lazy var moreWinsText = playerProfile.binding.map { " MORE WIN" + ($0.winsToFabled != 1 ? "S" : "") }
 
   override var layout: Layout {
     return
@@ -44,65 +44,89 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
           Text(playerName)
             .font(Style.Font.title)
-            .fontSize(36)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(Style.Color.text),
-
-          Spacer(DisplayScale.x375.scale(8)),
-
-          Text(currentGlory)
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x375)
+            .fontSize(40)
+            .alignment(.center)
             .color(Style.Color.text)
-          +
-          Text(" Glory   —   ")
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(Style.Color.text)
-          +
-          Text(playerRank)
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(Style.Color.imperativeText),
+            .adjustsFontSizeRelativeToDisplay(.x375),
 
-          Spacer(DisplayScale.x320.scale(12)),
+          Spacer(Style.Layout.mediumSpacing),
+
+          StackView(.horizontal, [
+            Spacer(.flexible),
+
+            PillView(.plain,
+              Text(currentGlory, " GLORY")
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              ),
+
+            Spacer(Style.Layout.mediumSpacing),
+
+            PillView(.emphasized,
+              Text(playerRank)
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              ),
+
+            Spacer(.flexible)
+          ]),
+
+          Spacer(.flexible),
 
           //MARK: Cards
 
-          NextRankupCard(gloryRemaining: nextRank, winsRemaining: winsToNextRank),
+          NextRankupCard(
+            gloryRemaining: nextRank,
+            winsRemaining: winsToNextRank),
 
-          Spacer(DisplayScale.x375.scale(18)),
+          Spacer(Style.Layout.mediumSpacing),
 
-          RecentActivityCard(winStreak: currentWinStreak, matchesPlayed: matchesPlayedThisWeek, matchesWon: matchesWonThisWeek),
+          RecentActivityCard(
+            winStreak: currentWinStreak,
+            matchesPlayed: matchesPlayedThisWeek,
+            matchesWon: matchesWonThisWeek),
 
-          Spacer(DisplayScale.x375.scale(18)),
+          Spacer(Style.Layout.mediumSpacing),
 
-          WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUpAtReset, matchesRemaining: matchesRemainingForWeeklyBonus, realGlory: gloryAtNextWeeklyReset, optimisticGlory: optimisticGloryAtNextWeeklyReset, currentRankDecays: currentRankDecays),
+          WeeklyBonusCard(
+            bonusMet: metWeeklyBonus,
+            rankingUp: willRankUpAtReset,
+            matchesRemaining: matchesRemainingForWeeklyBonus,
+            realGlory: gloryAtNextWeeklyReset,
+            optimisticGlory: optimisticGloryAtNextWeeklyReset,
+            currentRankDecays: currentRankDecays),
 
           //MARK: Wins to Fabled
 
-          Spacer(DisplayScale.x320.scale(12)),
+          Spacer(.flexible),
 
-          Text(winsToFabled)
-            .font(Style.Font.heading)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .transforming(when: winsToFabledIsZero) { $0.textColor = Style.Color.text }
-            .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = Style.Color.imperativeText }
-          +
-          Text(moreWinsText)
-            .font(Style.Font.heading)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(Style.Color.text)
-          +
-          Text(" to reach Fabled")
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(Style.Color.text),
+          StackView(.horizontal, [
+            Spacer(.flexible),
+
+            PillView(.emphasized,
+              Text(winsToFabled)
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              +
+              Text(moreWinsText, " FOR FABLED")
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              ),
+
+            Spacer(.flexible)
+          ]),
 
           //MARK: Change Account, Refresh, & More Info
 
           Spacer(.flexible),
 
           StackView(.horizontal, [
+            Spacer(.flexible),
+
             Button(#imageLiteral(resourceName: "escape_regular_m"))
               .observe(with: onChangePlayerPressed)
               .size(22)
@@ -112,22 +136,23 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
             Button(#imageLiteral(resourceName: "refresh_regular_m"))
               .observe(with: onRefreshPressed)
-              .size(22)
+              .size(34)
               .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(23)
+              .size(22 + 1) //+1 for visual sizing differences from escape button
               .tintColor(Style.Color.deemphasized),
+
+            Spacer(.flexible)
           ])
           .adjustsSpacingRelativeToDisplay(.x320)
           .alignment(.center)
         ])
-        .alignment(.center)
       )
-      .pinned([.leading, .trailing])
+      .pinnedToEdges([.leading, .trailing], padding: Style.Layout.mediumSpacing)
       .pinned([.top], padding: UIDevice.current.isRunningIOS10 ? 20 : 0)
       .pinned([.bottom], padding: UIDevice.current.hasHomeButton ? 8 : 0)
   }

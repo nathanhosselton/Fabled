@@ -50,6 +50,9 @@ enum Style {
         static let largeSpacing: CGFloat = DisplayScale.x375.scale(24)
 
         /// The standard distance to set for medium spacing amounts.
-        static let mediumSpacing: CGFloat = 12
+        static let mediumSpacing: CGFloat = DisplayScale.x375.scale(16)
+
+        /// The standard distance to set for small spacing amounts.
+        static let smallSpacing: CGFloat = DisplayScale.x375.scale(12)
     }
 }

@@ -7,7 +7,7 @@ import Model
 final class DebugUIViewController: DeclarativeViewController {
   private let currentGlory = State(initialValue: "1045")
   private let playerRank = State(initialValue: GloryRank.brave(.III))
-  private lazy var playerRankText = playerRank.binding.map { String(describing: $0) }
+  private lazy var playerRankText = playerRank.binding.map { String(describing: $0).uppercased() }
 
   private let gloryToNextRank = State(initialValue: 5)
   private let winsToNextRank = State<UInt>(initialValue: 1)
@@ -25,7 +25,7 @@ final class DebugUIViewController: DeclarativeViewController {
 
   private let winsToFabled = State(initialValue: "9")
   private lazy var winsToFabledIsZero = winsToFabled.binding.map { Int($0) == 0 }
-  private lazy var moreWinsText = winsToFabled.binding.map { "  more win" + (Int($0) != 1 ? "s" : "") }
+  private lazy var moreWinsText = winsToFabled.binding.map { " MORE WIN" + (Int($0) != 1 ? "S" : "") }
 
 
   override var layout: Layout {
@@ -38,60 +38,76 @@ final class DebugUIViewController: DeclarativeViewController {
 
           Text("starmunk")
             .font(Style.Font.title)
-            .fontSize(36)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white),
+            .fontSize(40)
+            .alignment(.center)
+            .color(Style.Color.text)
+            .adjustsFontSizeRelativeToDisplay(.x375),
 
-          Spacer(DisplayScale.x375.scale(8)),
+          Spacer(Style.Layout.mediumSpacing),
 
-          Text(currentGlory.binding)
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-          +
-          Text(" Glory   —   ")
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-          +
-          Text(playerRankText)
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.red),
+          StackView(.horizontal, [
+            Spacer(.flexible),
 
-          Spacer(DisplayScale.x320.scale(12)),
+            PillView(.plain,
+              Text(currentGlory.binding, " GLORY")
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              ),
+
+            Spacer(Style.Layout.mediumSpacing),
+
+            PillView(.emphasized,
+              Text(playerRankText)
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              ),
+
+            Spacer(.flexible)
+          ]),
+
+          Spacer(.flexible),
 
           NextRankupCard(gloryRemaining: gloryToNextRank.binding, winsRemaining: winsToNextRank.binding),
-          Spacer(DisplayScale.x375.scale(18)),
+
+          Spacer(Style.Layout.mediumSpacing),
+
           RecentActivityCard(winStreak: currentWinStreak.binding, matchesPlayed: matchesPlayedThisWeek.binding, matchesWon: matchesWonThisWeek.binding),
-          Spacer(DisplayScale.x375.scale(18)),
+
+          Spacer(Style.Layout.mediumSpacing),
+          
           WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUp.binding, matchesRemaining: matchesRemainingForWeeklyBonus.binding, realGlory: gloryAtNextWeeklyReset.binding, optimisticGlory: optimisticGloryAtNextWeeklyReset.binding, currentRankDecays: currentRankDecays),
 
           //MARK: Wins to Fabled
 
-          Spacer(DisplayScale.x320.scale(12)),
+          Spacer(.flexible),
 
-          Text(winsToFabled.binding)
-            .font(Style.Font.heading)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .transforming(when: winsToFabledIsZero) { $0.textColor = .white }
-            .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = .red }
-          +
-          Text(moreWinsText)
-            .font(Style.Font.heading)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(Style.Color.text)
-          +
-          Text(" to reach Fabled")
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(Style.Color.text),
+          StackView(.horizontal, [
+            Spacer(.flexible),
+
+            PillView(.emphasized,
+              Text(winsToFabled.binding)
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+              +
+              Text(moreWinsText, " FOR FABLED")
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+            ),
+
+            Spacer(.flexible)
+          ]),
 
           //MARK: Change Account, Refresh, & More Info
           
           Spacer(.flexible),
-//          Spacer(DisplayScale.x375.scale(16)),
 
           StackView(.horizontal, [
+            Spacer(.flexible),
+
             Button(#imageLiteral(resourceName: "escape_regular_m"))
 //              .observe(with: onChangePlayerPressed)
               .size(22)
@@ -101,7 +117,7 @@ final class DebugUIViewController: DeclarativeViewController {
 
             Button(#imageLiteral(resourceName: "refresh_regular_m"))
               .observe(with: onRefreshPressed)
-              .size(22)
+              .size(34)
               .tintColor(Style.Color.interactive),
 
             Spacer(50),
@@ -110,13 +126,14 @@ final class DebugUIViewController: DeclarativeViewController {
               .observe(with: onMoreInfoPressed)
               .size(23)
               .tintColor(Style.Color.deemphasized),
+
+            Spacer(.flexible)
           ])
           .adjustsSpacingRelativeToDisplay(.x320)
           .alignment(.center)
         ])
-        .alignment(.center)
       )
-      .pinned([.leading, .trailing])
+      .pinnedToEdges([.leading, .trailing], padding: Style.Layout.mediumSpacing)
       .pinned([.top], padding: UIDevice.current.isRunningIOS10 ? 20 : 0)
       .pinned([.bottom], padding: UIDevice.current.hasHomeButton ? 8 : 0)
   }
