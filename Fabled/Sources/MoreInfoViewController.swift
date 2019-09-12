@@ -64,7 +64,7 @@ final class MoreInfoViewController: DeclarativeViewController {
 
               Spacer(sectionSpacing),
 
-              Text("——")
+              Text("— —")
                 .alignment(.center)
                 .font(Style.Font.body)
                 .fontSize(22)
@@ -245,26 +245,26 @@ final class MoreInfoViewController: DeclarativeViewController {
   }
 
   private func faqHeaderStyling(_ label: UILabel) {
-    label.font = UIFont(name: Style.Font.heading, size: 16)
+    label.font = Style.Font.heading.withSize(16)
     label.textColor = .white
   }
 
   private func faqBodyStyling(_ label: UILabel) {
     label.numberOfLines = 0
-    label.font = UIFont(name: Style.Font.body, size: textSize)
+    label.font = Style.Font.body.withSize(textSize)
     label.textColor = .white
   }
 
   private func categoryColumnStyling(_ label: UILabel) {
-    label.font = UIFont(name: Style.Font.heading, size: 16)
+    label.font = Style.Font.heading.withSize(16)
     label.textColor = .white
     label.textAlignment = .right
-    label.widthAnchor.constraint(equalToConstant: 72).isActive = true
+    label.widthAnchor.constraint(equalToConstant: 76).isActive = true
   }
 
   private func bodyColumnStyling(_ label: UILabel) {
     label.numberOfLines = 0
-    label.font = UIFont(name: Style.Font.body, size: textSize)
+    label.font = Style.Font.body.withSize(textSize)
     label.textColor = .white
   }
 

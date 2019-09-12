@@ -28,7 +28,7 @@ class CardView: UIView {
 
     /// Styling provider for the primary value text of `CardView`s (the large numbers).
     func primaryValueTextStyling(_ label: UILabel) {
-        label.font = UIFont(name: Style.Font.thicc, size: CardView.Font.titleSize)
+        label.font = Style.Font.thicc.withSize(CardView.Font.titleSize)
         label.textColor = Style.Color.text
         setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.widthAnchor.constraint(greaterThanOrEqualToConstant: CardView.Spacing.minimumTitleWidth).isActive = true
@@ -36,7 +36,7 @@ class CardView: UIView {
 
     /// Styling provider for the header text of `CardView`s.
     func headerTextStyling(_ label: UILabel) {
-        label.font = UIFont(name: Style.Font.heading, size: CardView.Font.headingSize)
+        label.font = Style.Font.heading.withSize(CardView.Font.headingSize)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.76
         label.textColor = Style.Color.text
@@ -44,7 +44,7 @@ class CardView: UIView {
 
     /// Styling provider for the body text of `CardView`s.
     func bodyTextStyling(_ label: UILabel) {
-        label.font = UIFont(name: Style.Font.body, size: CardView.Font.bodySize)
+        label.font = Style.Font.body.withSize(CardView.Font.bodySize)
         label.textColor = Style.Color.text
     }
 }
