@@ -118,7 +118,10 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
       Bungie.searchForPlayer(with: playerName, on: self.playerSearchPlatform.snapshot.forBungie)
         .done { self.player.binding.emit($0.first) }
         .ensure { self.playerSearchActivityIndicator.stopAnimating() }
-        .cauterize()
+        .catch {
+          guard let error = $0 as? Bungie.Error, error == .systemDisabledForMaintenance else { return }
+          self.presentationShouldDisplayAlert(for: error)
+        }
     }
 
     //Kickoff search when platform selection updates while a player name is entered
