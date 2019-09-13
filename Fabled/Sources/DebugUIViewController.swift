@@ -4,26 +4,26 @@ import Model
 
 /// Class for quickly testing and iterating on UI. Only compiled and presented when the active compiler
 /// flags `DEBUG` and `UIPREVIEW` are both set in Build Settings.
-final class DebugUIViewController: DeclarativeViewController {
-  private let currentGlory = State(initialValue: "1045")
-  private let playerRank = State(initialValue: GloryRank.brave(.III))
+final class DebugUIViewController: DeclarativeViewController, RootPresentationViewControllerDelegate {
+  private let currentGlory = State(initialValue: "2037")
+  private let playerRank = State(initialValue: GloryRank.heroic(.III))
   private lazy var playerRankText = playerRank.binding.map { String(describing: $0).uppercased() }
 
-  private let gloryToNextRank = State(initialValue: 5)
-  private let winsToNextRank = State<UInt>(initialValue: 1)
+  private let gloryToNextRank = State(initialValue: 63)
+  private let winsToNextRank = State<UInt>(initialValue: 2)
 
-  private let currentWinStreak = State<UInt>(initialValue: 1)
-  private let matchesPlayedThisWeek = State(initialValue: 2)
-  private let matchesWonThisWeek = State(initialValue: 1)
+  private let currentWinStreak = State<UInt>(initialValue: 0)
+  private let matchesPlayedThisWeek = State(initialValue: 0)
+  private let matchesWonThisWeek = State(initialValue: 0)
 
-  private let matchesRemainingForWeeklyBonus = State(initialValue: 1)
+  private let matchesRemainingForWeeklyBonus = State(initialValue: 3)
   private lazy var metWeeklyBonus = matchesRemainingForWeeklyBonus.binding.map { $0 == 0 }
   private let willRankUp = State(initialValue: true)
   private let gloryAtNextWeeklyReset = State(initialValue: 1253)
-  private let optimisticGloryAtNextWeeklyReset = State(initialValue: 1253)
+  private let optimisticGloryAtNextWeeklyReset = State(initialValue: 2113)
   private lazy var currentRankDecays = playerRank.binding.map { $0 >= .mythic(.I) }
 
-  private let winsToFabled = State(initialValue: "9")
+  private let winsToFabled = State(initialValue: "2")
   private lazy var winsToFabledIsZero = winsToFabled.binding.map { Int($0) == 0 }
   private lazy var moreWinsText = winsToFabled.binding.map { " MORE WIN" + (Int($0) != 1 ? "S" : "") }
 
@@ -36,7 +36,7 @@ final class DebugUIViewController: DeclarativeViewController {
 
           //MARK: Player Name, Glory & Rank
 
-          Text("starmunk")
+          Text("WeirdRituals")
             .font(Style.Font.title)
             .fontSize(DisplayScale.x375.scale(40))
             .alignment(.center)
