@@ -3,143 +3,86 @@ import UIKit
 final class WeeklyBonusCard: CardView {
   private weak var metWeeklyBonus: Binding<Bool>!
   private weak var willRankUp: Binding<Bool>!
-  private weak var rankDecays: Binding<Bool>!
 
-  private let matchesRemainingForWeeklyBonus: Binding<String>
-  private let gloryAtNextWeeklyReset: Binding<String>
-  private let optimisticGloryAtNextWeeklyReset: Binding<String>
+  private let matchesRemainingValue: Binding<String>
+  private let gloryAtNextResetValue: Binding<String>
+  private let optimisticGloryAtNextResetValue: Binding<String>
 
-  private let matchesRemainingIsOne: Binding<Bool>
-
-  private let rankingUpText: Binding<String>
+  private let matchesRemainingIndicator: Binding<String>
+  private let matchesRemainingText: Binding<String>
+  private let bonusOrDecayText: Binding<String>
 
   override var body: StackView {
     return
-      StackView(.vertical, [
-        Spacer(6),
-
+      StackView(.horizontal, [
         StackView(.horizontal, [
-          Spacer(20),
+          Spacer(.flexible),
 
-          Text(matchesRemainingForWeeklyBonus)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(60)
+          Text(matchesRemainingValue)
+            .font(Style.Font.thicc)
+            .fontSize(CardView.Font.titleSize)
+            .transforming(when: metWeeklyBonus) { $1.textColor = $0 ? Style.Color.text : Style.Color.imperativeText },
+
+          Text(matchesRemainingIndicator)
+            .font(Style.Font.thicc)
+            .fontSize(44)
             .adjustsFontSizeRelativeToDisplay(.x375)
-            .transforming(when: metWeeklyBonus) { $0.textColor = .white }
-            .transforming(when: metWeeklyBonus, is: false) { $0.textColor = .red }
-            .contentHuggingPriority(.max),
+            .color(Style.Color.imperativeText)
+            .offset(.vertical, -2),
 
-          Spacer(10),
-
-          StackView(.vertical, [
-            Text("Matches remaining")
-              .transforming(when: matchesRemainingIsOne) { "Match remaining" }
-              .transforming(when: matchesRemainingIsOne, is: false) { "Matches remaining" }
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .contentCompressionResistance(.max)
-              .contentHuggingPriority(.max, .vertical),
-
-            Text("to weekly bonus")
-              .transforming(when: rankDecays) { "to avoid decay" }
-              .transforming(when: rankDecays, is: false) { "to weekly bonus" }
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .contentCompressionResistance(.max)
-              .contentHuggingPriority(.max, .vertical)
-          ])
-          .alignment(.leading),
-
-          Spacer(20)
+          Spacer(.flexible)
         ])
-        .adjustsSpacingRelativeToDisplay(.x375)
-        .alignment(.center, preservingSubviews: true)
-        .contentHuggingPriority(.max),
+        .alignment(.center)
+        .width(CardView.Spacing.minimumTitleWidth),
 
-        Spacer(6),
+        Spacer(CardView.Spacing.title),
 
-        StackView(.horizontal, [
-          Spacer(20),
+        StackView(.vertical, [
+          Text(matchesRemainingText)
+            .styleProvider(headerTextStyling),
 
-          StackView(.vertical, [
-            //if metWeeklyBonus
+          //FIXME: On x320 devices the above label's font is reduced but the below's is not
+          //Need e.g. `Binding.join(…)` so these can be a single Label instead of two.
+          Text(bonusOrDecayText)
+            .styleProvider(headerTextStyling),
 
-            Text("You'll have ")
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .isHidden(while: metWeeklyBonus, is: false)
-            +
-            Text(gloryAtNextWeeklyReset)
-              .font(Style.Font.NeueHaasGrotesk65Medium)
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .isHidden(while: metWeeklyBonus, is: false)
-            +
-            Text(" Glory at next reset")
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .isHidden(while: metWeeklyBonus, is: false),
+          Spacer(CardView.Spacing.heading),
 
-            //else
+          If(metWeeklyBonus).then(
+            Text("You'll have ", gloryAtNextResetValue, " Glory at next reset")
+              .numberOfLines(2)
+              .styleProvider(bodyTextStyling)
+          ).else(
+            Text("Win your next match for at least ", optimisticGloryAtNextResetValue, " Glory at next reset")
+              .numberOfLines(2)
+              .styleProvider(bodyTextStyling)
+          ),
 
-            Text("Win your next match for at least ")
-              .color(.white)
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .isHidden(while: metWeeklyBonus),
+          If(willRankUp).then(
+            Spacer(CardView.Spacing.heading),
 
-            Text(optimisticGloryAtNextWeeklyReset)
-              .font(Style.Font.NeueHaasGrotesk65Medium)
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .isHidden(while: metWeeklyBonus)
-            +
-            Text(" Glory at next reset")
-              .fontSize(17)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.white)
-              .isHidden(while: metWeeklyBonus),
-
-            Spacer(2),
-
-            Text(rankingUpText)
-              .fontSize(20)
-              .adjustsFontSizeRelativeToDisplay(.x375)
-              .color(.red)
-
-            //endif
-          ])
-          .alignment(.center),
-
-          Spacer(20)
+            Text("Ranking up".uppercased())
+              .font(Style.Font.heading)
+              .fontSize(CardView.Font.bodySize)
+              .color(Style.Color.imperativeText)
+          )
         ])
-        .adjustsSpacingRelativeToDisplay(.x375),
-
-        Spacer(8)
+        .alignment(.leading)
       ])
-      .adjustsSpacingRelativeToDisplay(.x375)
       .alignment(.center)
-      .contentHuggingPriority(.max, .horizontal)
   }
 
   init(bonusMet: Binding<Bool>, rankingUp: Binding<Bool>, matchesRemaining: Binding<Int>, realGlory: Binding<Int>, optimisticGlory: Binding<Int>, currentRankDecays: Binding<Bool>) {
     metWeeklyBonus = bonusMet
     willRankUp = rankingUp
-    rankDecays = currentRankDecays
 
-    matchesRemainingForWeeklyBonus = matchesRemaining.map(String.init)
-    gloryAtNextWeeklyReset = realGlory.map(String.init)
-    optimisticGloryAtNextWeeklyReset = optimisticGlory.map(String.init)
+    matchesRemainingValue = matchesRemaining.map(String.init)
+    gloryAtNextResetValue = realGlory.map(String.init)
+    optimisticGloryAtNextResetValue = optimisticGlory.map(String.init)
 
-    matchesRemainingIsOne = matchesRemaining.map { $0 == 1 }
-
-    rankingUpText = willRankUp.map { $0 ? "Ranking up" : "" }
+    matchesRemainingIndicator = bonusMet.map { $0 ? "" : "▴" }
+    matchesRemainingText = matchesRemaining.map { $0 == 1 ? "Match remaining to" : "Matches remaining to" }
+    bonusOrDecayText = currentRankDecays.map { $0 ? "avoid decay" : "weekly bonus" }
 
     super.init()
   }

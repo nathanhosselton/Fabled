@@ -212,7 +212,7 @@ final class Button: UIView, BindableControl {
         associatedControl.removeTarget(self, action: #selector(onControlEvent), for: .allEvents)
 
         #if DEBUG
-//        print("\(type(of: self)) deinit")
+        print("\(type(of: self)) deinit")
         #endif
     }
 

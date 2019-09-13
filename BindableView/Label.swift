@@ -42,11 +42,43 @@ public final class Label: UILabel, BindableView {
         font = Label.defaultFont
     }
 
+    /// A convenience initializer that takes a `String` binding and adjacent constants which are
+    /// concatenated to the binding value each update.
+    /// - Parameters:
+    ///     - prefix: The string value to prepend to the binding value.
+    ///     - binding: The value binding used to update this view's `text` property.
+    ///     - suffix: The string value to append to the binding value.
+    init(_ prefix: String, _ binding: Binding<String>, _ suffix: String) {
+        self.binding = binding
+        super.init(frame: .zero)
+        font = Label.defaultFont
+        binding.observe { [weak self] in self?.text = prefix + $0 + suffix}
+    }
+
+    /// A convenience initializer that takes a `String` binding and an adjacent constant that is
+    /// concatenated to the binding value each update.
+    /// - Parameters:
+    ///     - prefix: The string value to prepend to the binding value.
+    ///     - binding: The value binding used to update this view's `text` property.
+    convenience init(_ prefix: String, _ binding: Binding<String>) {
+        self.init(prefix, binding, "")
+    }
+
+    /// A convenience initializer that takes a `String` binding and an adjacent constant that is
+    /// concatenated to the binding value each update.
+    /// - Parameters:
+    ///     - binding: The value binding used to update this view's `text` property.
+    ///     - suffix: The string value to append to the binding value.
+    convenience init(_ binding: Binding<String>, _ suffix: String) {
+        self.init("", binding, suffix)
+    }
+
     /// Performs the provided transform to this label's `text` when the condition is met.
     ///
     /// Observes the provided binding, checking its value when updated and conditionally executing the
     /// provided transform, setting its returned value as the new `text` for the label.
-    /// - Important: The provided binding is **not** retained.
+    /// - Important: The provided binding is not retained, but the transform _is_. Do not
+    ///     pass methods without proper consideration for retain cycles.
     /// - Parameters:
     ///   - binding: The boolean value binding to observe for executing the transform.
     ///   - is: Optional comparitor for the `binding`'s value. Defaults to `true`.
@@ -67,12 +99,47 @@ public final class Label: UILabel, BindableView {
         return self
     }
 
+    /// Sets the baseline adjustment of the text within the Label.
+    /// - parameter baseline: The baseline adjustment to be used.
+    func baselineAdjustment(_ baseline: UIBaselineAdjustment) -> Self {
+        baselineAdjustment = baseline
+        return self
+    }
+
+    /// Sets the kerning of this label's text.
+    ///
+    /// If the label has static text, the kerning is immediately set. If the label receives its text from
+    /// a binding, the binding is observed and kerning is set on each update.
+    /// - parameter amount: The amount of kerning to apply.
+    func kerning(_ amount: CGFloat) -> Self {
+        let kern: (String) -> Void = { [weak self] text in
+            let kerned: NSMutableAttributedString
+
+            if let attributed = self?.attributedText {
+                kerned = NSMutableAttributedString(attributedString: attributed)
+            } else {
+                kerned = NSMutableAttributedString(string: text)
+            }
+
+            kerned.addAttribute(.kern, value: amount, range: NSRange(location: 0, length: kerned.length))
+            self?.attributedText = kerned
+        }
+
+        if let text = text, text.count > 0 {
+            kern(text)
+        }
+
+        binding?.observe(with: kern)
+
+        return self
+    }
+
     /// Sets the font.
     /// - Note: If `adjustsFontSizeRelativeToDisplay` has been set, the size of the font will be scaled.
     /// - parameter font: The font to be used for text.
     /// - Seealso: `fontFamily(:)`, `fontFace(:)`
     func font(_ font: UIFont) -> Self {
-        self.font = font.withSize(displayScale.scale(font.pointSize))
+        self.font = font.withSize(displayScale.scaleWithHeight(font.pointSize))
         return self
     }
 
@@ -91,7 +158,7 @@ public final class Label: UILabel, BindableView {
     func font(from descriptor: UIFontDescriptor) -> Self {
         let size: CGFloat
         if descriptor.pointSize > 0 {
-            size = displayScale.scale(descriptor.pointSize)
+            size = displayScale.scaleWithHeight(descriptor.pointSize)
         } else {
             size = font.pointSize
         }
@@ -171,7 +238,7 @@ public final class Label: UILabel, BindableView {
 
     private var displayScale = DisplayScale.any {
         didSet {
-            font = font.withSize(displayScale.scale(font.pointSize))
+            font = font.withSize(displayScale.scaleWithHeight(font.pointSize))
         }
     }
 
@@ -188,7 +255,7 @@ public final class Label: UILabel, BindableView {
     }
 }
 
-enum DisplayScale: CGFloat {
+enum DisplayScale: CGFloat, Comparable {
     /// The maximum scaling factor to observe in calculations. Higher values will be ignored.
     static var maxScaling = DisplayScale.x1112
 
@@ -205,20 +272,74 @@ enum DisplayScale: CGFloat {
     /// Scales relative to devices with a width of `1112` points.
     case x1112 = 1112.0
 
-    /// Returns the provided value scaled to the current display size relative to self. The result
-    ///  is always rounded in the direction of the scaling.
+    /// The maximum possible height for the width class. Used for scaling with height.
+    private var maxHeight: CGFloat {
+        switch self {
+        case .any:
+            return 1.0
+        case .x320:
+            return 568.0
+        case .x375:
+            //NOTE: Technically this value should be 812.0 (iPhone X), but in practice
+            //that's an unfair value to scale against due to the large safe areas at
+            //the top and bottom of X displays. This value (for x414 displays) ends up
+            //scaling exactly as expected.
+            return 736.0
+        case .x414:
+            return 736.0
+        case .x1024:
+            return 1366.0
+        case .x1112:
+            return 834.0
+        }
+    }
+
+    /// Returns the provided value scaled to the current display width relative to self. The result
+    /// is always rounded in the direction of the scaling.
     /// - parameter value: The value to scale.
     func scale(_ value: CGFloat) -> CGFloat {
         guard self != .any else { return value }
         let scaled = value * (min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue)
         return scaled.rounded(scaled < value ? .down : .up)
     }
+
+    /// Returns the provided value scaled to the current display size relative to self. The result
+    /// is always rounded in the direction of the scaling.
+    ///
+    /// The display's width and height are considered, the latter of which relative to the maximum
+    /// possible height for the width class. The smallest scale factor is used to scale the result.
+    /// - parameter value: The value to scale.
+    func scaleWithHeight(_ value: CGFloat) -> CGFloat {
+        guard self != .any else { return value }
+        let widthScale = min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue
+        let heightScale = min(UIScreen.main.bounds.height, DisplayScale.maxScaling.maxHeight) / maxHeight
+        let scaled = value * min(widthScale, heightScale)
+        return scaled.rounded(scaled < value ? .down : .up)
+    }
+
+    static func < (lhs: DisplayScale, rhs: DisplayScale) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+}
+
+extension UIScreen {
+    /// The `DisplayScale` that will be used on this device based on its screen size.
+    var displayScale: DisplayScale {
+        switch bounds.width {
+        case 320.0: return .x320
+        case 375.0: return .x375
+        case 414.0: return .x414
+        case 1024.0: return .x1024
+        case 1112.0: return .x1112
+        default:
+            return .any
+        }
+    }
 }
 
 extension Label {
     static func + (lhs: Label, rhs: Label) -> UIStackView {
         return UIStackView(arrangedSubviews: [lhs, rhs])
-//        return StackView(.horizontal, arrangedSubviews: [lhs, rhs])
     }
 
     static func + (lhs: UIStackView, rhs: Label) -> UIStackView {

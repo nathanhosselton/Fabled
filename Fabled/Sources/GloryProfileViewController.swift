@@ -9,7 +9,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
   //Header
   private lazy var playerName = playerProfile.binding.map { $0.player.displayName }
-  private lazy var playerRank = playerProfile.binding.map { $0.rankText }
+  private lazy var playerRank = playerProfile.binding.map { $0.rankText.uppercased() }
   private lazy var currentGlory = playerProfile.binding.map { String($0.glory.currentProgress) }
 
   //NextRankUpCard
@@ -32,7 +32,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   //Footer
   private lazy var winsToFabled = playerProfile.binding.map { String($0.winsToFabled) }
   private lazy var winsToFabledIsZero = playerProfile.binding.map { $0.winsToFabled == 0 }
-  private lazy var moreWinsText = playerProfile.binding.map { "  more win" + ($0.winsToFabled != 1 ? "s" : "") }
+  private lazy var moreWinsText = playerProfile.binding.map { " MORE WIN" + ($0.winsToFabled != 1 ? "S" : "") }
 
   override var layout: Layout {
     return
@@ -43,90 +43,119 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
           //MARK: Player Name, Glory & Rank
 
           Text(playerName)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(36)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white),
+            .font(Style.Font.title)
+            .fontSize(DisplayScale.x375.scale(40))
+            .alignment(.center)
+            .color(Style.Color.text),
 
-          Spacer(DisplayScale.x375.scale(8)),
+          Spacer(Style.Layout.mediumSpacing),
 
-          Text(currentGlory)
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-          +
-          Text(" Glory   —   ")
-            .fontSize(22)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-          +
-          Text(playerRank)
-            .fontSize(24)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.red),
+          StackView(.horizontal, [
+            Spacer(.flexible),
 
-          Spacer(DisplayScale.x320.scale(12)),
+            PillView(.plain,
+              Text(currentGlory, " GLORY")
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
+              ),
+
+            Spacer(Style.Layout.mediumSpacing),
+
+            PillView(.emphasized,
+              Text(playerRank)
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
+              ),
+
+            Spacer(.flexible)
+          ]),
+
+          Spacer(.flexible),
 
           //MARK: Cards
 
-          NextRankupCard(gloryRemaining: nextRank, winsRemaining: winsToNextRank),
+          NextRankupCard(
+            gloryRemaining: nextRank,
+            winsRemaining: winsToNextRank),
 
-          Spacer(DisplayScale.x375.scale(18)),
+          Spacer(Style.Layout.mediumSpacing),
 
-          RecentActivityCard(winStreak: currentWinStreak, matchesPlayed: matchesPlayedThisWeek, matchesWon: matchesWonThisWeek),
+          RecentActivityCard(
+            winStreak: currentWinStreak,
+            matchesPlayed: matchesPlayedThisWeek,
+            matchesWon: matchesWonThisWeek),
 
-          Spacer(DisplayScale.x375.scale(18)),
+          Spacer(Style.Layout.mediumSpacing),
 
-          WeeklyBonusCard(bonusMet: metWeeklyBonus, rankingUp: willRankUpAtReset, matchesRemaining: matchesRemainingForWeeklyBonus, realGlory: gloryAtNextWeeklyReset, optimisticGlory: optimisticGloryAtNextWeeklyReset, currentRankDecays: currentRankDecays),
+          WeeklyBonusCard(
+            bonusMet: metWeeklyBonus,
+            rankingUp: willRankUpAtReset,
+            matchesRemaining: matchesRemainingForWeeklyBonus,
+            realGlory: gloryAtNextWeeklyReset,
+            optimisticGlory: optimisticGloryAtNextWeeklyReset,
+            currentRankDecays: currentRankDecays),
 
           //MARK: Wins to Fabled
 
-          Spacer(DisplayScale.x320.scale(12)),
+          Spacer(.flexible),
 
-          Text(winsToFabled)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .transforming(when: winsToFabledIsZero) { $0.textColor = .white }
-            .transforming(when: winsToFabledIsZero, is: false) { $0.textColor = .red }
-          +
-          Text(moreWinsText)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.white)
-          +
-          Text(" to reach Fabled")
-            .adjustsFontSizeRelativeToDisplay(.x320)
-            .color(.white),
+          StackView(.horizontal, [
+            Spacer(.flexible),
+
+            PillView(.emphasized,
+              Text(winsToFabled)
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
+              +
+              Text(moreWinsText, " FOR FABLED")
+                .font(Style.Font.title)
+                .fontSize(18)
+                .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
+              ),
+
+            Spacer(.flexible)
+          ]),
 
           //MARK: Change Account, Refresh, & More Info
 
           Spacer(.flexible),
 
           StackView(.horizontal, [
-            Button(#imageLiteral(resourceName: "logout_icon"))
+            Spacer(.flexible),
+
+            Button(#imageLiteral(resourceName: "escape_regular_m"))
               .observe(with: onChangePlayerPressed)
-              .size(22)
-              .tintColor(.lightGray),
-
-            Spacer(48), //visual centering
-
-            Button(#imageLiteral(resourceName: "refresh_icon"))
-              .observe(with: onRefreshPressed)
-              .size(22)
-              .tintColor(.white),
+              .size(DisplayScale.x375.scaleWithHeight(22))
+              .tintColor(Style.Color.deemphasized),
 
             Spacer(50),
 
-            Button("?")
+            Button(#imageLiteral(resourceName: "refresh_regular_m"))
+              .observe(with: onRefreshPressed)
+              .size(DisplayScale.x375.scaleWithHeight(34))
+              .tintColor(Style.Color.interactive),
+
+            Spacer(50),
+
+            Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .styleProvider(moreInfoButtonStyling)
+              .size(DisplayScale.x375.scaleWithHeight(22 + 1)) //+1 for visual sizing differences from escape button
+              .tintColor(Style.Color.deemphasized),
+
+            Spacer(.flexible)
           ])
           .adjustsSpacingRelativeToDisplay(.x320)
           .alignment(.center)
         ])
-        .alignment(.center)
       )
-      .pinned([.leading, .trailing])
+      .pinnedToEdges([.leading, .trailing], padding: Style.Layout.mediumSpacing)
       .pinned([.top], padding: UIDevice.current.isRunningIOS10 ? 20 : 0)
       .pinned([.bottom], padding: UIDevice.current.hasHomeButton ? 8 : 0)
   }
@@ -139,22 +168,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = Style.Color.background
-    //FIXME: Build into `DeclarativeViewController`
     playerProfile.broadcast()
-  }
-
-  private func moreInfoButtonStyling(_ button: UIButton) {
-    button.titleLabel?.font = UIFont(name: Style.Font.NeueHaasGrotesk65Medium, size: 14)
-    button.titleEdgeInsets.top = 1
-    button.setTitleColor(.lightGray, for: .normal)
-
-    let size: CGFloat = 22
-    button.widthAnchor.constraint(equalToConstant: size).isActive = true
-    button.heightAnchor.constraint(equalToConstant: size).isActive = true
-
-    button.layer.cornerRadius = size / 2
-    button.layer.borderColor = UIColor.lightGray.cgColor
-    button.layer.borderWidth = 1.666
   }
 
   private func onChangePlayerPressed() {

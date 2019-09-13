@@ -158,7 +158,7 @@ final class TextField: UITextField, BindableView, BindableControl {
 
     /// Configures a target-action for the field that ends editing when the return key is pressed. Removes
     /// the target-action when `false` is passed.
-    /// - parameter value: Profile `false` to disable this functionality after being enabled.
+    /// - parameter value: Provide `false` to disable this functionality after being enabled.
     func endEditingOnReturn(_ value: Bool = true) -> Self {
         if value {
             addTarget(self, action: #selector(endEditing), for: .editingDidEndOnExit)

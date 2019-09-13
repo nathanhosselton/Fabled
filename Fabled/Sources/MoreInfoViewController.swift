@@ -18,7 +18,7 @@ final class MoreInfoViewController: DeclarativeViewController {
           Scrollable(contentView:
             StackView(.vertical, [
               Text("FAQ")
-                .font(Style.Font.NeueHaasGrotesk65Medium)
+                .font(Style.Font.title)
                 .alignment(.center)
                 .fontSize(24)
                 .color(.white),
@@ -64,9 +64,9 @@ final class MoreInfoViewController: DeclarativeViewController {
 
               Spacer(sectionSpacing),
 
-              Text("——")
+              Text("— —")
                 .alignment(.center)
-                .font(Style.Font.text)
+                .font(Style.Font.body)
                 .fontSize(22)
                 .color(.white),
 
@@ -220,7 +220,7 @@ final class MoreInfoViewController: DeclarativeViewController {
             
             Button("Go Back")
               .observe(with: onGoBackPressed)
-              .font(Style.Font.NeueHaasGrotesk65Medium)
+              .font(Style.Font.heading)
               .fontSize(16)
               .titleColor(.white)
               .backgroundColor(.clear),
@@ -245,26 +245,26 @@ final class MoreInfoViewController: DeclarativeViewController {
   }
 
   private func faqHeaderStyling(_ label: UILabel) {
-    label.font = UIFont(name: Style.Font.text, size: 16)
+    label.font = Style.Font.heading.withSize(16)
     label.textColor = .white
   }
 
   private func faqBodyStyling(_ label: UILabel) {
     label.numberOfLines = 0
-    label.font = UIFont(name: Style.Font.NeueHaasGrotesk65Medium, size: textSize)
+    label.font = Style.Font.body.withSize(textSize)
     label.textColor = .white
   }
 
   private func categoryColumnStyling(_ label: UILabel) {
-    label.font = UIFont(name: Style.Font.NeueHaasGrotesk65Medium, size: 16)
+    label.font = Style.Font.heading.withSize(16)
     label.textColor = .white
     label.textAlignment = .right
-    label.widthAnchor.constraint(equalToConstant: 72).isActive = true
+    label.widthAnchor.constraint(equalToConstant: 76).isActive = true
   }
 
   private func bodyColumnStyling(_ label: UILabel) {
     label.numberOfLines = 0
-    label.font = UIFont(name: Style.Font.text, size: textSize)
+    label.font = Style.Font.body.withSize(textSize)
     label.textColor = .white
   }
 

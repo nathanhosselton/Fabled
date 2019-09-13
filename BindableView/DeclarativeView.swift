@@ -46,6 +46,13 @@ extension DeclarativeView {
         return self
     }
 
+    /// Sets the corner radius of the view's layer.
+    /// - parameter value: The amount to set for the view layer's corner radius.
+    func cornerRadius(_ value: CGFloat) -> Self {
+        layer.cornerRadius = value
+        return self
+    }
+
     /// Sets the content hugging priority of the view.
     /// - Parameters:
     ///   - priority: The layout priority value to use.

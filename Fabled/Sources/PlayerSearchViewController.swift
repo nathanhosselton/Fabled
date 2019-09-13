@@ -22,15 +22,17 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
           StackView(.vertical, [
             Text("Fabled")
-              .font(Style.Font.NeueHaasGrotesk65Medium)
+              .font(Style.Font.title)
               .fontSize(40)
-              .color(.white),
+              .color(Style.Color.text)
+              .adjustsFontSizeRelativeToDisplay(.x375),
 
             Spacer(4),
 
             Text("Destiny 2 Glory Tracker")
-              .font(Style.Font.text)
-              .color(.white),
+              .font(Style.Font.body)
+              .color(Style.Color.text)
+              .adjustsFontSizeRelativeToDisplay(.x375),
           ])
           .alignment(.center)
           .offset(.vertical, -26), //Inset title text into image view
@@ -41,48 +43,48 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
           StackView(.vertical, [
             SegmentedControl(playerSearchPlatform.binding)
-              .font(Style.Font.text)
-              .titleColor(.white)
+              .font(Style.Font.heading)
+              .fontSize(DisplayScale.x375.scale(18))
+              .titleColor(Style.Color.text)
               .titleColor(.black, while: .selected, .highlighted)
-              .tintColor(.white)
+              .tintColor(Style.Color.interactive)
               .backgroundColor(.clear),
 
             Spacer(32 + 8), //+8 accounts for "View Glory" button's label inset
 
-            StackView(.horizontal, [
-              Spacer(19.5), //Width of righthand activity indicator in text field
-
-              TextField(playerSearchText.binding)
-                .updatesRateLimited(to: 1.0)
-                .textAlignment(.center)
-                .autocorrectionType(.no)
-                .autocapitalizationType(.none)
-                .keyboardType(.twitter) //For BattleTag hash
-                .font(Style.Font.text)
-                .fontSize(16)
-                .placeholder("Select a platform to narrow your search")
-                .transforming(when: playerSearchPlatform.binding, updatePlayerSearchFieldPlaceholder)
-                .placeholderColor(.lightGray)
-                .textColor(.white)
-                .cursorColor(.white)
-                .rightView(playerSearchActivityIndicator, mode: .always)
-                .endEditingOnReturn()
-            ]),
+            TextField(playerSearchText.binding)
+              .updatesRateLimited(to: 1.0)
+              .placeholder("Select a platform" + (UIScreen.main.displayScale > .x320 ? " to narrow search" : ""))
+              .transforming(when: playerSearchPlatform.binding, updatePlayerSearchFieldPlaceholder)
+              .rightView(playerSearchActivityIndicator, mode: .always)
+              .leftView(View().size(19.5), mode: .always) //Compensates for rightView
+              .endEditingOnReturn()
+              .font(Style.Font.body)
+              .fontSize(DisplayScale.x320.scale(16))
+              .textAlignment(.center)
+              .autocorrectionType(.no)
+              .autocapitalizationType(.none)
+              .keyboardType(.twitter) //For BattleTag hash
+              .placeholderColor(Style.Color.deemphasized)
+              .textColor(Style.Color.text)
+              .cursorColor(Style.Color.interactive)
+              .backgroundColor(Style.Color.backdrop)
+              .cornerRadius(DisplayScale.x320.scale(8))
+              .width(view.bounds.width - Style.Layout.largeSpacing * 2)
+              .height(DisplayScale.x320.scale(30)),
 
             Spacer(32),
 
-            StackView(.horizontal, [
-              Spacer(8 + 20), //Intrisic size of righthand activity indicator + spacing
-
+            StackView(.vertical, [
               Button("View Glory Profile")
                 .observe(with: onViewPressed)
                 .isEnabled(when: player.binding) { $0 != nil }
-                .font(Style.Font.NeueHaasGrotesk65Medium)
-                .fontSize(17)
-                .titleColor(.white)
-                .titleColor(.darkGray, while: .disabled),
+                .font(Style.Font.heading)
+                .fontSize(DisplayScale.x375.scale(18))
+                .titleColor(Style.Color.text)
+                .titleColor(Style.Color.disabled, while: .disabled),
 
-              Spacer(8),
+              Spacer(Style.Layout.smallSpacing),
 
               View(profileFetchActivityIndicator)
             ])
@@ -91,7 +93,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
           .alignment(.center)
           .adjustsForKeyboard(obscureOtherContent: true),
 
-          Spacer(DisplayScale.x375.scale(100)), //Counterbalance header image to keep fields more centered
+          Spacer(UIScreen.main.displayScale == .x320 ? 30 : 100), //Pad bottom of screen to keep fields more centered
           Spacer(.flexible)
         ])
         .alignment(.center)
@@ -126,7 +128,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
   }
 
   /// Text field transform when selected platform updates.
-  private func updatePlayerSearchFieldPlaceholder(_ platform: Platform, _ field: TextField) {
+  private var updatePlayerSearchFieldPlaceholder: (Platform, TextField) -> Void = { platform, field in
     switch platform {
     case .xbox:
       field.placeholder = "Gamertag"
@@ -138,7 +140,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
       field.placeholder = "BattleTag#1234"
       field.keyboardType = .twitter
     case .all:
-      field.placeholder = "Select a platform to narrow your search"
+      field.placeholder = "Select a platform"
       field.keyboardType = .twitter
     }
 

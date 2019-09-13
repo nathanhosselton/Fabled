@@ -32,8 +32,8 @@ class View: UIView, DeclarativeView {
 
         NSLayoutConstraint.activate([
             subview.topAnchor.constraint(equalTo: topAnchor, constant: margin),
-            subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: margin),
-            subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: margin),
+            subview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -margin),
+            subview.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin),
             subview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin)
         ])
     }

@@ -1,70 +1,34 @@
 import UIKit
 
 final class NextRankupCard: CardView {
-  private var gloryToNextRankText: Binding<String>
-  private var winsToNextRankText: Binding<String>
-  private var moreWinsText: Binding<String>
+  private let gloryToNextRankValue: Binding<String>
+  private let winsToGoText: Binding<String>
 
   override var body: StackView {
     return
-      StackView(.vertical, [
-        Spacer(6),
+      StackView(.horizontal, [
+        Text(gloryToNextRankValue)
+          .styleProvider(primaryValueTextStyling),
 
-        StackView(.horizontal, [
-          Spacer(20),
+        Spacer(CardView.Spacing.title),
 
-          Text(gloryToNextRankText)
-            .font(Style.Font.NeueHaasGrotesk65Medium)
-            .fontSize(60)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-            .contentHuggingPriority(.max),
+        StackView(.vertical, [
+          Text("Glory to next rank up")
+            .styleProvider(headerTextStyling),
+          
+            Spacer(CardView.Spacing.heading),
 
-          Spacer(10),
-
-          Text("Glory to next\nrank-up")
-            .numberOfLines(2)
-            .fontSize(20)
-            .adjustsFontSizeRelativeToDisplay(.x375)
-            .color(.white)
-            .contentCompressionResistance(.max)
-            .contentHuggingPriority(.max, .vertical),
-
-          Spacer(20)
+            Text(winsToGoText)
+              .styleProvider(bodyTextStyling)
         ])
-        .adjustsSpacingRelativeToDisplay(.x375)
-        .alignment(.center, preservingSubviews: true)
-        .contentHuggingPriority(.max),
-
-        Spacer(4),
-
-        Text("That's  ")
-          .fontSize(17)
-          .adjustsFontSizeRelativeToDisplay(.x375)
-          .color(.white)
-        +
-        Text(winsToNextRankText)
-          .font(Style.Font.NeueHaasGrotesk65Medium)
-          .fontSize(20)
-          .adjustsFontSizeRelativeToDisplay(.x375)
-          .color(.red)
-        +
-        Text(moreWinsText)
-          .fontSize(17)
-          .adjustsFontSizeRelativeToDisplay(.x375)
-          .color(.white),
-
-        Spacer(8)
+        .alignment(.leading)
       ])
-      .adjustsSpacingRelativeToDisplay(.x375)
       .alignment(.center)
-      .contentHuggingPriority(.max, .horizontal)
   }
 
   init(gloryRemaining: Binding<Int>, winsRemaining: Binding<UInt>) {
-    gloryToNextRankText = gloryRemaining.map { String($0) }
-    winsToNextRankText = winsRemaining.map { String($0) }
-    moreWinsText = winsRemaining.map { "  more win" + ($0 == 1 ? "" : "s" )}
+    gloryToNextRankValue = gloryRemaining.map(String.init)
+    winsToGoText = winsRemaining.map { String($0) + ($0 == 1 ? " win" : " wins") + " to go"}
     super.init()
   }
 
