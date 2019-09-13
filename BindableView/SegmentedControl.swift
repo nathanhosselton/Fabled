@@ -84,6 +84,15 @@ final class SegmentedControl<T: RawRepresentable & CaseIterable & CustomStringCo
         return self
     }
 
+    /// Sets the size of the font of the text displayed in the segments.
+    /// - parameter size: The size to use for the current font, in points.
+    func fontSize(_ size: CGFloat) -> Self {
+        var attr = titleTextAttributes(for: .normal) ?? [:]
+        attr[.font] = (attr[.font] as? UIFont)?.withSize(size) ?? UIFont.preferredFont(forTextStyle: .headline).withSize(size)
+        UIControl.State.allCases.forEach { setTitleTextAttributes(attr, for: $0) }
+        return self
+    }
+
     /// Sets the color of the segment title text for the provided control state(s). May be called multiple times.
     /// - Parameters:
     ///   - color: The color to use for each segment's title text.
@@ -117,6 +126,10 @@ final class SegmentedControl<T: RawRepresentable & CaseIterable & CustomStringCo
     deinit {
         removeTarget(self, action: #selector(selectionChanged), for: .valueChanged)
         removeTarget(self, action: #selector(onControlEvent), for: .allEvents)
+
+        #if DEBUG
+        print("\(type(of: self)) deinit")
+        #endif
     }
 
 

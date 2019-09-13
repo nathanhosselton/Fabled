@@ -35,11 +35,17 @@ enum Style {
         /// The color to be used for text of crucial note to the user.
         static let imperativeText = UIColor.red
 
+        /// The color to be used for views with backdrops.
+        static let backdrop = UIColor(white: 0.133, alpha: 1.0)
+
+        /// The color to be used for views with backdrops, with transluscency.
+        static let transluscentBackdrop = backdrop.withAlphaComponent(0.866)
+
         /// The background color to be used for `CardView`s.
-        static let cardView = UIColor(white: 0.133, alpha: 1.0)//UIColor(white: 1.0, alpha: 0.13)
+        static let cardView = backdrop
 
         /// The color to be used for standard "pill" views.
-        static let pill = UIColor(white: 0.133, alpha: 1.0)
+        static let pill = backdrop
 
         /// The color to be used for emphasized "pill" views.
         static let emphasizedPill = UIColor.red
