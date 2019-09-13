@@ -139,7 +139,7 @@ public final class Label: UILabel, BindableView {
     /// - parameter font: The font to be used for text.
     /// - Seealso: `fontFamily(:)`, `fontFace(:)`
     func font(_ font: UIFont) -> Self {
-        self.font = font.withSize(displayScale.scale(font.pointSize))
+        self.font = font.withSize(displayScale.scaleWithHeight(font.pointSize))
         return self
     }
 
@@ -158,7 +158,7 @@ public final class Label: UILabel, BindableView {
     func font(from descriptor: UIFontDescriptor) -> Self {
         let size: CGFloat
         if descriptor.pointSize > 0 {
-            size = displayScale.scale(descriptor.pointSize)
+            size = displayScale.scaleWithHeight(descriptor.pointSize)
         } else {
             size = font.pointSize
         }
@@ -238,7 +238,7 @@ public final class Label: UILabel, BindableView {
 
     private var displayScale = DisplayScale.any {
         didSet {
-            font = font.withSize(displayScale.scale(font.pointSize))
+            font = font.withSize(displayScale.scaleWithHeight(font.pointSize))
         }
     }
 
@@ -255,7 +255,7 @@ public final class Label: UILabel, BindableView {
     }
 }
 
-enum DisplayScale: CGFloat {
+enum DisplayScale: CGFloat, Comparable {
     /// The maximum scaling factor to observe in calculations. Higher values will be ignored.
     static var maxScaling = DisplayScale.x1112
 
@@ -272,13 +272,53 @@ enum DisplayScale: CGFloat {
     /// Scales relative to devices with a width of `1112` points.
     case x1112 = 1112.0
 
-    /// Returns the provided value scaled to the current display size relative to self. The result
-    ///  is always rounded in the direction of the scaling.
+    /// The maximum possible height for the width class. Used for scaling with height.
+    private var maxHeight: CGFloat {
+        switch self {
+        case .any:
+            return 1.0
+        case .x320:
+            return 568.0
+        case .x375:
+            //NOTE: Technically this value should be 812.0 (iPhone X), but in practice
+            //that's an unfair value to scale against due to the large safe areas at
+            //the top and bottom of X displays. This value (for x414 displays) ends up
+            //scaling exactly as expected.
+            return 736.0
+        case .x414:
+            return 736.0
+        case .x1024:
+            return 1366.0
+        case .x1112:
+            return 834.0
+        }
+    }
+
+    /// Returns the provided value scaled to the current display width relative to self. The result
+    /// is always rounded in the direction of the scaling.
     /// - parameter value: The value to scale.
     func scale(_ value: CGFloat) -> CGFloat {
         guard self != .any else { return value }
         let scaled = value * (min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue)
         return scaled.rounded(scaled < value ? .down : .up)
+    }
+
+    /// Returns the provided value scaled to the current display size relative to self. The result
+    /// is always rounded in the direction of the scaling.
+    ///
+    /// The display's width and height are considered, the latter of which relative to the maximum
+    /// possible height for the width class. The smallest scale factor is used to scale the result.
+    /// - parameter value: The value to scale.
+    func scaleWithHeight(_ value: CGFloat) -> CGFloat {
+        guard self != .any else { return value }
+        let widthScale = min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue
+        let heightScale = min(UIScreen.main.bounds.height, DisplayScale.maxScaling.maxHeight) / maxHeight
+        let scaled = value * min(widthScale, heightScale)
+        return scaled.rounded(scaled < value ? .down : .up)
+    }
+
+    static func < (lhs: DisplayScale, rhs: DisplayScale) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }
 

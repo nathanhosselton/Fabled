@@ -44,10 +44,9 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
           Text(playerName)
             .font(Style.Font.title)
-            .fontSize(40)
+            .fontSize(DisplayScale.x375.scale(40))
             .alignment(.center)
-            .color(Style.Color.text)
-            .adjustsFontSizeRelativeToDisplay(.x375),
+            .color(Style.Color.text),
 
           Spacer(Style.Layout.mediumSpacing),
 
@@ -133,21 +132,21 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
             Button(#imageLiteral(resourceName: "escape_regular_m"))
               .observe(with: onChangePlayerPressed)
-              .size(DisplayScale.x375.scale(22))
+              .size(DisplayScale.x375.scaleWithHeight(22))
               .tintColor(Style.Color.deemphasized),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "refresh_regular_m"))
               .observe(with: onRefreshPressed)
-              .size(DisplayScale.x375.scale(34))
+              .size(DisplayScale.x375.scaleWithHeight(34))
               .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(DisplayScale.x375.scale(22 + 1)) //+1 for visual sizing differences from escape button
+              .size(DisplayScale.x375.scaleWithHeight(22 + 1)) //+1 for visual sizing differences from escape button
               .tintColor(Style.Color.deemphasized),
 
             Spacer(.flexible)

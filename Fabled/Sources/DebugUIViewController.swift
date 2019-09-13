@@ -38,10 +38,9 @@ final class DebugUIViewController: DeclarativeViewController {
 
           Text("starmunk")
             .font(Style.Font.title)
-            .fontSize(40)
+            .fontSize(DisplayScale.x375.scale(40))
             .alignment(.center)
-            .color(Style.Color.text)
-            .adjustsFontSizeRelativeToDisplay(.x375),
+            .color(Style.Color.text),
 
           Spacer(Style.Layout.mediumSpacing),
 
@@ -114,21 +113,21 @@ final class DebugUIViewController: DeclarativeViewController {
 
             Button(#imageLiteral(resourceName: "escape_regular_m"))
 //              .observe(with: onChangePlayerPressed)
-              .size(DisplayScale.x375.scale(22))
+              .size(DisplayScale.x375.scaleWithHeight(22))
               .tintColor(Style.Color.deemphasized),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "refresh_regular_m"))
               .observe(with: onRefreshPressed)
-              .size(DisplayScale.x375.scale(34))
+              .size(DisplayScale.x375.scaleWithHeight(34))
               .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(DisplayScale.x375.scale(23))
+              .size(DisplayScale.x375.scaleWithHeight(23))
               .tintColor(Style.Color.deemphasized),
 
             Spacer(.flexible)

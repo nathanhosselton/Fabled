@@ -53,12 +53,12 @@ enum Style {
 
     enum Layout {
         /// The standard distance to set for large spacing amounts.
-        static let largeSpacing: CGFloat = DisplayScale.x375.scale(24)
+        static let largeSpacing: CGFloat = DisplayScale.x375.scaleWithHeight(24)
 
         /// The standard distance to set for medium spacing amounts.
-        static let mediumSpacing: CGFloat = DisplayScale.x375.scale(16)
+        static let mediumSpacing: CGFloat = DisplayScale.x375.scaleWithHeight(16)
 
         /// The standard distance to set for small spacing amounts.
-        static let smallSpacing: CGFloat = DisplayScale.x375.scale(12)
+        static let smallSpacing: CGFloat = DisplayScale.x375.scaleWithHeight(12)
     }
 }

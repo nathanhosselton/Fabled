@@ -201,13 +201,16 @@ public class StackView: UIStackView, DeclarativeView {
     }
 
     /// Enables decreasing or increasing of the size of spacers added to this stack view relative to
-    /// the provided display scale. This method immediately updates the current spacing size when called.
+    /// the provided display scale.
+    ///
+    /// This method immediately updates the current spacing size when called. Does not affect
+    /// flexible spacers.
     /// - parameter scale: The display scale to use for scaling spacers. That is, the display scale
     ///   for which the spacer size will remain unchanged.
     func adjustsSpacingRelativeToDisplay(_ scale: DisplayScale) -> Self {
         for case let spacer as Spacer in arrangedSubviews {
             if spacer.isStaticSpacer {
-                spacer.size = scale.scale(spacer.size)
+                spacer.size = scale.scaleWithHeight(spacer.size)
             }
         }
 

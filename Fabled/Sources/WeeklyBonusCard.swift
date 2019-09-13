@@ -50,11 +50,11 @@ final class WeeklyBonusCard: CardView {
 
           If(metWeeklyBonus).then(
             Text("You'll have ", gloryAtNextResetValue, " Glory at next reset")
-              .numberOfLines(0)
+              .numberOfLines(2)
               .styleProvider(bodyTextStyling)
           ).else(
             Text("Win your next match for at least ", optimisticGloryAtNextResetValue, " Glory at next reset")
-              .numberOfLines(0)
+              .numberOfLines(2)
               .styleProvider(bodyTextStyling)
           ),
 
