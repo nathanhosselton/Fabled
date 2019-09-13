@@ -18,6 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    func applicationWillResignActive(_ application: UIApplication) {
+        if let alert = window?.rootViewController?.presentedViewController as? UIAlertController {
+            alert.dismiss(animated: true)
+        }
+    }
+
 }
 
 extension UserDefaults {

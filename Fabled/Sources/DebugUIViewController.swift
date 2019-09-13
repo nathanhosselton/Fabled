@@ -112,7 +112,7 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
             Spacer(.flexible),
 
             Button(#imageLiteral(resourceName: "escape_regular_m"))
-//              .observe(with: onChangePlayerPressed)
+              .observe(with: onChangePlayerPressed)
               .size(DisplayScale.x375.scaleWithHeight(22))
               .tintColor(Style.Color.deemphasized),
 
@@ -211,6 +211,12 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
 
   private func onMoreInfoPressed() {
     present(MoreInfoViewController(), animated: true)
+  }
+
+  private func onChangePlayerPressed() {
+    //DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: ""))
+    //PMKHTTPError.badStatusCode(0, Data(), HTTPURLResponse())
+    presentationShouldDisplayAlert(for: Fabled.Error.genericUserFacing)
   }
 
   required init(coder: NSCoder = .empty) {

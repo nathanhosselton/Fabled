@@ -19,11 +19,11 @@ enum Error: LocalizedError, CustomStringConvertible {
     var description: String {
         switch self {
         case .genericUserFacing:
-            return "Something went wrong. Sorry, we got nothing else for you. Try again in a few."
+            return "Something went wrong. Sorry, we got nothing else for you. Try again in a few. If it persists, reporting it would be helpful for us."
         case .modelDecodingFailed:
-            return "We screwed up. Trying again may not fix it. Reporting this along with your player name would be helpful for us:\ngithub.com/nathanhosselton/Fabled"
+            return "We screwed up. Trying again may not fix it. Reporting this along with your player name would be helpful for us."
         case .badHTTPResponse:
-            return "We reached to reach out to Bungie but got the cold shoulder. Check your internet or try again in a few."
+            return "We tried to reach out to Bungie but got the cold shoulder. Check your internet connection or try again in a few."
         }
     }
 }
