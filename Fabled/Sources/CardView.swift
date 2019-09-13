@@ -14,7 +14,7 @@ class CardView: UIView {
         backgroundColor = Style.Color.cardView
 
         let body = self.body
-        let inset = Style.Layout.largeSpacing
+        let inset = DisplayScale.x375.scale(Style.Layout.largeSpacing)
 
         addSubview(body)
 

@@ -59,6 +59,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
                 .font(Style.Font.title)
                 .fontSize(18)
                 .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
               ),
 
             Spacer(Style.Layout.mediumSpacing),
@@ -68,6 +69,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
                 .font(Style.Font.title)
                 .fontSize(18)
                 .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
               ),
 
             Spacer(.flexible)
@@ -110,11 +112,13 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
                 .font(Style.Font.title)
                 .fontSize(18)
                 .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
               +
               Text(moreWinsText, " FOR FABLED")
                 .font(Style.Font.title)
                 .fontSize(18)
                 .color(Style.Color.text)
+                .adjustsFontSizeRelativeToDisplay(.x375)
               ),
 
             Spacer(.flexible)
@@ -129,21 +133,21 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
             Button(#imageLiteral(resourceName: "escape_regular_m"))
               .observe(with: onChangePlayerPressed)
-              .size(22)
+              .size(DisplayScale.x375.scale(22))
               .tintColor(Style.Color.deemphasized),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "refresh_regular_m"))
               .observe(with: onRefreshPressed)
-              .size(34)
+              .size(DisplayScale.x375.scale(34))
               .tintColor(Style.Color.interactive),
 
             Spacer(50),
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(22 + 1) //+1 for visual sizing differences from escape button
+              .size(DisplayScale.x375.scale(22 + 1)) //+1 for visual sizing differences from escape button
               .tintColor(Style.Color.deemphasized),
 
             Spacer(.flexible)
