@@ -217,13 +217,14 @@ final class MoreInfoViewController: DeclarativeViewController {
 
           StackView(.horizontal, [
             Spacer(.flexible),
-            
-            Button("Go Back")
+
+            Button("   Done   ")
               .observe(with: onGoBackPressed)
-              .font(Style.Font.heading)
+              .font(Style.Font.title)
               .fontSize(16)
               .titleColor(.white)
-              .backgroundColor(.clear),
+              .backgroundColor(Style.Color.backdrop)
+              .cornerRadius(8),
           ]),
 
           Spacer(sectionSpacing)
