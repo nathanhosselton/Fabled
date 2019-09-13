@@ -37,6 +37,7 @@ class DeclarativeViewController: UIViewController, DeclarativeViewProviding {
         // will be automatically recreated and configured when the window asks for it.
         func removeFromSuperview(_ view: UIView) {
             view.subviews.forEach(removeFromSuperview)
+            //FIXME: Ideally we'd only remove if it's a BindableControl but can't check because its generic
             view.removeFromSuperview()
         }
         _view?.subviews.forEach(removeFromSuperview)
