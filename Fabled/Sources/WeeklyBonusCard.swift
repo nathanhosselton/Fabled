@@ -81,8 +81,8 @@ final class WeeklyBonusCard: CardView {
     optimisticGloryAtNextResetValue = optimisticGlory.map(String.init)
 
     matchesRemainingIndicator = bonusMet.map { $0 ? "" : "▴" }
-    matchesRemainingText = matchesRemaining.map { $0 == 1 ? "Match remaining to" : "Matches remaining to" }
-    bonusOrDecayText = currentRankDecays.map { $0 ? "avoid decay" : "weekly bonus" }
+    matchesRemainingText = matchesRemaining.map { $0 == 1 ? "Match remaining" : "Matches remaining" }
+    bonusOrDecayText = currentRankDecays.map { $0 ? "to avoid decay" : "to weekly bonus" }
 
     super.init()
   }
