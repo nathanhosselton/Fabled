@@ -54,13 +54,13 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
             TextField(playerSearchText.binding)
               .updatesRateLimited(to: 1.0)
-              .placeholder("Select a platform" + (UIScreen.main.displayScale > .x320 ? " to narrow search" : ""))
+              .placeholder("Select a platform to narrow search")
               .transforming(when: playerSearchPlatform.binding, updatePlayerSearchFieldPlaceholder)
               .rightView(playerSearchActivityIndicator, mode: .always)
               .leftView(View().size(19.5), mode: .always) //Compensates for rightView
               .endEditingOnReturn()
               .font(Style.Font.body)
-              .fontSize(DisplayScale.x320.scale(16))
+              .fontSize(DisplayScale.x375.scale(18))
               .textAlignment(.center)
               .autocorrectionType(.no)
               .autocapitalizationType(.none)
