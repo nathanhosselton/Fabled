@@ -127,7 +127,7 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(DisplayScale.x375.scaleWithHeight(23))
+              .size(DisplayScale.x375.scaleWithHeight(22 + 2))
               .tintColor(Style.Color.deemphasized),
 
             Spacer(.flexible)
