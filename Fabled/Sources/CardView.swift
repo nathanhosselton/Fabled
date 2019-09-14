@@ -59,9 +59,9 @@ class CardView: UIView {
 extension CardView {
     /// A collection of standard font related constants for text inside `CardView`s.
     enum Font {
-        static let titleSize: CGFloat = DisplayScale.x375.scaleWithHeight(60)
-        static let headingSize: CGFloat = DisplayScale.x375.scaleWithHeight(22)
-        static let bodySize: CGFloat = DisplayScale.x375.scaleWithHeight(16)
+        static let titleSize: CGFloat = UIScreen.main.displayScale == .x414 ? 60 : DisplayScale.x375.scaleWithHeight(58)
+        static let headingSize: CGFloat = UIScreen.main.displayScale == .x414 ? 23 : DisplayScale.x375.scaleWithHeight(21)
+        static let bodySize: CGFloat = UIScreen.main.displayScale == .x414 ? 16 : DisplayScale.x375.scaleWithHeight(16)
     }
 
     /// A collection of spacing related constants for subview layout inside `CardView`s.
