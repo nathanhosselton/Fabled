@@ -294,17 +294,15 @@ enum DisplayScale: CGFloat, Comparable {
         }
     }
 
-    /// Returns the provided value scaled to the current display width relative to self. The result
-    /// is always rounded in the direction of the scaling.
+    /// Returns the provided value scaled to the current display width relative to self.
     /// - parameter value: The value to scale.
     func scale(_ value: CGFloat) -> CGFloat {
         guard self != .any else { return value }
-        let scaled = value * (min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue)
-        return scaled.rounded(scaled < value ? .down : .up)
+        let scale = min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue
+        return value * scale
     }
 
-    /// Returns the provided value scaled to the current display size relative to self. The result
-    /// is always rounded in the direction of the scaling.
+    /// Returns the provided value scaled to the current display size relative to self.
     ///
     /// The display's width and height are considered, the latter of which relative to the maximum
     /// possible height for the width class. The smallest scale factor is used to scale the result.
@@ -313,8 +311,8 @@ enum DisplayScale: CGFloat, Comparable {
         guard self != .any else { return value }
         let widthScale = min(UIScreen.main.bounds.width, DisplayScale.maxScaling.rawValue) / rawValue
         let heightScale = min(UIScreen.main.bounds.height, DisplayScale.maxScaling.maxHeight) / maxHeight
-        let scaled = value * min(widthScale, heightScale)
-        return scaled.rounded(scaled < value ? .down : .up)
+        let scale = abs(1 - widthScale) > abs(1 - heightScale) ? widthScale : heightScale
+        return value * scale
     }
 
     static func < (lhs: DisplayScale, rhs: DisplayScale) -> Bool {
