@@ -14,6 +14,9 @@ enum Style {
 
         /// The font used for **T H I C C** text.
         static let thicc = UIFont.systemFont(ofSize: 20, weight: .bold) //.SFUIDisplay-Bold
+
+        /// The font size to use for text that is displayed wiithin `PillView`s.
+        static let sizeForPill: CGFloat = 17
     }
 
     enum Color {
