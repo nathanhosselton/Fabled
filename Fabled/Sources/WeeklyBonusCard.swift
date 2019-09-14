@@ -25,7 +25,7 @@ final class WeeklyBonusCard: CardView {
 
           Text(matchesRemainingIndicator)
             .font(Style.Font.thicc)
-            .fontSize(44)
+            .fontSize(41)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(Style.Color.imperativeText)
             .offset(.vertical, -2),
@@ -61,7 +61,7 @@ final class WeeklyBonusCard: CardView {
           If(willRankUp).then(
             Spacer(CardView.Spacing.heading),
 
-            Text("Ranking up".uppercased())
+            Text("RANKING UP")
               .font(Style.Font.heading)
               .fontSize(CardView.Font.bodySize)
               .color(Style.Color.imperativeText)
