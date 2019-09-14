@@ -33,8 +33,8 @@ final class PillView: UIView {
 
         addSubview(body)
 
-        let yInset: CGFloat = DisplayScale.x375.scaleWithHeight(8)
-        let xInset: CGFloat = yInset * 2.333
+        let yInset: CGFloat = DisplayScale.x375.scaleWithHeight(7)
+        let xInset: CGFloat = yInset * 2.5
 
         NSLayoutConstraint.activate([
             body.topAnchor.constraint(equalTo: topAnchor, constant: yInset),

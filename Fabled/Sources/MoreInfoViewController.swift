@@ -136,7 +136,7 @@ final class MoreInfoViewController: DeclarativeViewController {
                 Spacer(10),
 
                 StackView(.vertical, [
-                  Button("Meow Pew Pew on Bungie.net")
+                  Button("Meow Pew Pew on Bungie")
                     .observe(with: onClanPressed),
 
                   Text("We're always welcoming chill new members (PC).")

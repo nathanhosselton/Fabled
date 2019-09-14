@@ -14,7 +14,7 @@ class CardView: UIView {
         backgroundColor = Style.Color.cardView
 
         let body = self.body
-        let inset = DisplayScale.x375.scaleWithHeight(Style.Layout.largeSpacing)
+        let inset = Style.Layout.largeSpacing
 
         addSubview(body)
 
@@ -48,6 +48,8 @@ class CardView: UIView {
     /// Styling provider for the body text of `CardView`s.
     func bodyTextStyling(_ label: UILabel) {
         label.font = Style.Font.body.withSize(CardView.Font.bodySize)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.80
         label.textColor = Style.Color.text
     }
 }
@@ -57,9 +59,9 @@ class CardView: UIView {
 extension CardView {
     /// A collection of standard font related constants for text inside `CardView`s.
     enum Font {
-        static let titleSize: CGFloat = DisplayScale.x375.scaleWithHeight(60)
-        static let headingSize: CGFloat = DisplayScale.x375.scaleWithHeight(22)
-        static let bodySize: CGFloat = DisplayScale.x375.scaleWithHeight(16)
+        static let titleSize: CGFloat = UIScreen.main.displayScale == .x414 ? 60 : DisplayScale.x375.scaleWithHeight(58)
+        static let headingSize: CGFloat = UIScreen.main.displayScale == .x414 ? 23 : DisplayScale.x375.scaleWithHeight(21)
+        static let bodySize: CGFloat = UIScreen.main.displayScale == .x414 ? 16 : DisplayScale.x375.scaleWithHeight(16)
     }
 
     /// A collection of spacing related constants for subview layout inside `CardView`s.
@@ -72,6 +74,6 @@ extension CardView {
         static let minimumTitleWidth: CGFloat = DisplayScale.x375.scale(76)
 
         /// The maximum value for width of the primary value column of card views.
-        static let maximumTitleWidth: CGFloat = DisplayScale.x375.scale(110)
+        static let maximumTitleWidth: CGFloat = DisplayScale.x375.scale(100)
     }
 }

@@ -56,7 +56,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
             PillView(.plain,
               Text(currentGlory, " GLORY")
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               ),
@@ -66,7 +66,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
             PillView(.emphasized,
               Text(playerRank)
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               ),
@@ -109,13 +109,13 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
             PillView(.emphasized,
               Text(winsToFabled)
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               +
               Text(moreWinsText, " FOR FABLED")
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               ),
@@ -146,7 +146,7 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(DisplayScale.x375.scaleWithHeight(22 + 1)) //+1 for visual sizing differences from escape button
+              .size(DisplayScale.x375.scaleWithHeight(22 + 2)) //+2 for visual sizing differences from escape button
               .tintColor(Style.Color.deemphasized),
 
             Spacer(.flexible)

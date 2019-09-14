@@ -25,7 +25,7 @@ final class WeeklyBonusCard: CardView {
 
           Text(matchesRemainingIndicator)
             .font(Style.Font.thicc)
-            .fontSize(44)
+            .fontSize(41)
             .adjustsFontSizeRelativeToDisplay(.x375)
             .color(Style.Color.imperativeText)
             .offset(.vertical, -2),
@@ -61,7 +61,7 @@ final class WeeklyBonusCard: CardView {
           If(willRankUp).then(
             Spacer(CardView.Spacing.heading),
 
-            Text("Ranking up".uppercased())
+            Text("RANKING UP")
               .font(Style.Font.heading)
               .fontSize(CardView.Font.bodySize)
               .color(Style.Color.imperativeText)
@@ -81,8 +81,8 @@ final class WeeklyBonusCard: CardView {
     optimisticGloryAtNextResetValue = optimisticGlory.map(String.init)
 
     matchesRemainingIndicator = bonusMet.map { $0 ? "" : "▴" }
-    matchesRemainingText = matchesRemaining.map { $0 == 1 ? "Match remaining to" : "Matches remaining to" }
-    bonusOrDecayText = currentRankDecays.map { $0 ? "avoid decay" : "weekly bonus" }
+    matchesRemainingText = matchesRemaining.map { $0 == 1 ? "Match remaining" : "Matches remaining" }
+    bonusOrDecayText = currentRankDecays.map { $0 ? "to avoid decay" : "to weekly bonus" }
 
     super.init()
   }

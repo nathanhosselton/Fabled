@@ -50,7 +50,7 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
             PillView(.plain,
               Text(currentGlory.binding, " GLORY")
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               ),
@@ -60,7 +60,7 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
             PillView(.emphasized,
               Text(playerRankText)
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               ),
@@ -90,13 +90,13 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
             PillView(.emphasized,
               Text(winsToFabled.binding)
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
               +
               Text(moreWinsText, " FOR FABLED")
                 .font(Style.Font.title)
-                .fontSize(18)
+                .fontSize(Style.Font.sizeForPill)
                 .color(Style.Color.text)
                 .adjustsFontSizeRelativeToDisplay(.x375)
             ),
@@ -127,7 +127,7 @@ final class DebugUIViewController: DeclarativeViewController, RootPresentationVi
 
             Button(#imageLiteral(resourceName: "question_regular_m"))
               .observe(with: onMoreInfoPressed)
-              .size(DisplayScale.x375.scaleWithHeight(23))
+              .size(DisplayScale.x375.scaleWithHeight(22 + 2))
               .tintColor(Style.Color.deemphasized),
 
             Spacer(.flexible)
