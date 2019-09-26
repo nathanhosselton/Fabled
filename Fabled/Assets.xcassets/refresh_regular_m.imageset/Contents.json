@@ -6,11 +6,12 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "refresh_regular_m@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "refresh_regular_m.png",
+      "filename" : "refresh_regular_m@3x.png",
       "scale" : "3x"
     }
   ],
