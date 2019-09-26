@@ -1,4 +1,5 @@
 import Foundation
+import UIKit.UIAlertController
 
 /// Errors presentable to the user as messages.
 enum Error: LocalizedError, CustomStringConvertible {
@@ -38,4 +39,107 @@ enum Error: LocalizedError, CustomStringConvertible {
             """
         }
     }
+}
+
+/// A collection of values used for presenting an error message to a user.
+protocol PresentableError: Swift.Error {
+    /// The title of the message to display.
+    var title: String { get }
+
+    /// The body of the message to display.
+    var body: String { get }
+
+    /// The text of the no-op user response action (i.e. the `.cancel` action).
+    var response: String { get }
+
+    /// A secondary response action to provide to the user, if desired.
+    var customResponse: UIAlertAction? { get }
+
+    /// Indicates that the error is appropriate for reporting to the Fabled Issues tracker.
+    /// Overrides `customResponse`, if present.
+    var reportable: Bool { get }
+}
+
+extension PresentableError {
+    /// Generates a new `UIAlertController` object that is appropriate for displaying this error to the user.
+    ///
+    /// The returned object is not automatically displayed and must be presented by the caller.
+    func alert() -> UIAlertController {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        alert.addAction(.init(title: response, style: .cancel))
+
+        if reportable {
+            alert.addAction(.init(title: "Report", style: .default) { _ in
+                UIApplication.shared.open(URL(string: "https://github.com/nathanhosselton/Fabled/issues")!)
+            })
+        } else if let customResponse = customResponse {
+            alert.addAction(customResponse)
+        }
+
+        return alert
+    }
+}
+
+extension Fabled.Error: PresentableError {
+    var title: String {
+        switch self {
+        case .shadowkeepLaunched:
+            return "Hey there"
+        case .modelDecodingFailed:
+            return "Dangit"
+        default:
+            return "Hmmm…"
+        }
+    }
+
+    var body: String {
+        return errorDescription
+    }
+
+    var response: String {
+        switch self {
+        case .shadowkeepLaunched:
+            return "OK"
+        case .modelDecodingFailed:
+            return "Cancel"
+        case .badHTTPResponse:
+            return "no u"
+        default:
+            return "Lame but ok"
+        }
+    }
+
+    var customResponse: UIAlertAction? {
+        switch self {
+        case .shadowkeepLaunched:
+            return UIAlertAction(title: "Read More", style: .default) { _ in
+                UIApplication.shared.open(URL(string: "https://github.com/nathanhosselton/Fabled/blob/master/README.md#re-shadowkeep")!)
+            }
+        default:
+            return nil
+        }
+    }
+
+    var reportable: Bool {
+        switch self {
+        case .modelDecodingFailed, .genericUserFacing:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
+import Model
+
+extension Bungie.Error: PresentableError {
+    var title: String { "Welp" }
+
+    var body: String { description }
+
+    var response: String { "Thanks Bungo" }
+
+    var customResponse: UIAlertAction? { nil }
+
+    var reportable: Bool { false }
 }

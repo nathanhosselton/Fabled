@@ -56,40 +56,22 @@ final class RootPresentationViewController: UIViewController {
     }
 
     fileprivate func displayAlert(for error: Swift.Error) {
-        let displayError: Swift.Error
-        var title = "Hmmm…"
-        var response = "Lame but ok"
-        var shouldReport = false
+        let displayError: PresentableError
 
         switch error {
         case is Fabled.Error:
-            displayError = error
-            shouldReport = (error as! Fabled.Error) == .genericUserFacing
+            displayError = error as! Fabled.Error
         case is Bungie.Error:
-            displayError = error
-            title = "Welp"
-            response = "Thanks, Bungo"
+            displayError = error as! Bungie.Error
         case is DecodingError:
             displayError = Fabled.Error.modelDecodingFailed
-            title = "Dangit"
-            response = "Cancel"
-            shouldReport = true
         case is PMKHTTPError:
             displayError = Fabled.Error.badHTTPResponse
-            response = "no u"
         default:
             displayError = Fabled.Error.genericUserFacing
-            shouldReport = true
         }
 
-        let alert = UIAlertController(title: title, message: displayError.localizedDescription, preferredStyle: .alert)
-        alert.addAction(.init(title: response, style: .cancel, handler: nil))
-        if shouldReport {
-            alert.addAction(.init(title: "Report", style: .default) { _ in
-                UIApplication.shared.open(URL(string: "https://github.com/nathanhosselton/Fabled/issues")!)
-            })
-        }
-        present(alert, animated: true)
+        present(displayError.alert(), animated: true)
     }
 
     private func display(_ vc: UIViewController) {
