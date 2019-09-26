@@ -171,6 +171,11 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
     playerProfile.broadcast()
   }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    showShadowkeepMessageIfNeeded()
+  }
+
   private func onChangePlayerPressed() {
     presentationShouldTransition(to: PlayerSearchViewController())
   }
@@ -204,6 +209,20 @@ class GloryProfileViewController: DeclarativeViewController, RootPresentationVie
 
   private func onMoreInfoPressed() {
     present(MoreInfoViewController(), animated: true)
+  }
+
+  private var hasShownShadowkeepMessageThisSession = false
+
+  private func showShadowkeepMessageIfNeeded() {
+    //Check that Shadowkeep has launched
+    guard Date() >= DateComponents(calendar: .current, year: 2019, month: 10, day: 1).date! else { return }
+
+    //Only show message once per app launch or per profile search
+    defer { hasShownShadowkeepMessageThisSession = true }
+
+    if !hasShownShadowkeepMessageThisSession {
+      presentationShouldDisplayAlert(for: Fabled.Error.shadowkeepLaunched)
+    }
   }
 
   #if DEBUG
