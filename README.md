@@ -2,8 +2,6 @@
 
 This is the source code for the "Fabled - Destiny Glory Tracker" (the 2 wouldn't fit) app in the [App Store](https://apps.apple.com/us/app/fabled-destiny-glory-tracker/id1477568586).
 
-I am releasing this app and its source code much earlier than I wanted due to upcoming changes in the game discussed [below](#early-release). The UI is admittedly not where I wanted it. And the code isn't either (especially my Bindable Views). I discuss this at length in the later sections.
-
 ## Feedback / Support
 
 If you've come to report a bug or otherwise provide feedback, you can do that [here](https://github.com/nathanhosselton/Fabled/issues) (requires a GitHub account).
@@ -30,13 +28,11 @@ So, rather than let that effort go to waste, I decided to release early in the h
 
 Bungie [recently announced](https://www.bungie.net/en/Explore/Detail/News/48072) that changes will be made to Glory Ranks and the way that players earn and lose Glory. We do not yet know all of the details, but the information shared thus far indicates that this app will not provide accurate information after the changes go live with the release of Shadowkeep on October 1.
 
-As soon as the community has the specifics on the changes, I will update the app to reflect, assuming the app's purpose is still relevant. I have no idea when this will be, however, and it may take until after October 1. You can check back here for progress updates.
+As soon as the community has the specifics on the changes, I will update the app to reflect, assuming the app's purpose is still relevant. I have no idea when this will be, however, and it may take until after October 1. You can follow the [open issue](https://github.com/nathanhosselton/Fabled/issues/3) for progress updates.
 
 ## Future Updates
 
-While we wait to hear about the Shadowkeep changes, I am going to continue releasing updates to the app. Mostly to its visuals, which I'm less than enthused with. I'm a programmer, and very distinctly _not_ a designer. I can tell when things look and work poorly or well, but not much more.
-
-But I _do_ have friends who can. And one of them has just sent me some mockups as I'm typing this. I hope to have those changes implemented next.
+I've released updates to the UI since launch that I'm much happier with, so for the moment the focus is going to be on seeing if it's possible to update for the Shadowkeep changes mentioned in the prior section.
 
 ## Open Source
 
