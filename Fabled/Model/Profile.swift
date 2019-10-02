@@ -170,7 +170,7 @@ public extension Profile {
 
         while matches < GloryRank.WeeklyMatchCompletionThreshold {
             matches += 1
-            points -= rank.lossDeficit
+            points = max(points - rank.lossDeficit, 0)
             rank = GloryRank(points: points)
         }
 

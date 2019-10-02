@@ -469,6 +469,11 @@ class ProfileTests: XCTestCase {
         XCTAssert(profile.pessimisticGloryAtNextWeeklyReset == expectedAmount)
     }
 
+    func testPessimisticGloryAtNextWeeklyResetDoesNotReturnNegativeValues() {
+        let zeroGloryProfile = generateProfile(at: GloryRank(points: 0))
+        XCTAssertGreaterThanOrEqual(zeroGloryProfile.pessimisticGloryAtNextWeeklyReset, 0)
+    }
+
     func testOptimisticGloryAtNextWeeklyResetReturnsExpectedAmountWithNoMatchesYetPlayed() {
         let rank = GloryRank.heroic(.III)
         let profile = generateProfile(at: rank, progressOffset: 200) //ensures no profile rank-down with losses
