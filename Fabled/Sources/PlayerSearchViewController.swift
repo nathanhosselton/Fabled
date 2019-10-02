@@ -55,7 +55,7 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
             TextField(playerSearchText.binding)
               .updatesRateLimited(to: 1.0)
               .placeholder("Select a platform to narrow search")
-              .transforming(when: playerSearchPlatform.binding, updatePlayerSearchFieldPlaceholder)
+              .transforming(when: playerSearchPlatform.binding) { $1.placeholder = $0.accountName }
               .rightView(playerSearchActivityIndicator, mode: .always)
               .leftView(View().size(19.5), mode: .always) //Compensates for rightView
               .endEditingOnReturn()
@@ -64,7 +64,6 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
               .textAlignment(.center)
               .autocorrectionType(.no)
               .autocapitalizationType(.none)
-              .keyboardType(.twitter) //For BattleTag hash
               .placeholderColor(Style.Color.deemphasized)
               .textColor(Style.Color.text)
               .cursorColor(Style.Color.interactive)
@@ -130,26 +129,6 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
     }
   }
 
-  /// Text field transform when selected platform updates.
-  private var updatePlayerSearchFieldPlaceholder: (Platform, TextField) -> Void = { platform, field in
-    switch platform {
-    case .xbox:
-      field.placeholder = "Gamertag"
-      field.keyboardType = .default
-    case .psn:
-      field.placeholder = "PSN ID"
-      field.keyboardType = .default
-    case .blizzard:
-      field.placeholder = "BattleTag#1234"
-      field.keyboardType = .twitter
-    case .all:
-      field.placeholder = "Select a platform"
-      field.keyboardType = .twitter
-    }
-
-    field.reloadInputViews()
-  }
-
   private func onViewPressed(_ sender: UIButton) {
     guard profileRequest == nil || profileRequest?.isPending == false else { return }
 
@@ -178,17 +157,17 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
 
 }
 
-// Can't use Bungie.Platform because .blizzard == 4 which screws up our SegmentedControl
+// Can't use Bungie.Platform because .xbox starts `1` which screws up our SegmentedControl
 // Strictly, should provide a more robust interface for SegmentedControl so this isn't necessary
 private enum Platform: Int, CaseIterable, CustomStringConvertible {
-  case xbox, psn, blizzard
+  case xbox, psn, steam
   case all = -1
 
   var forBungie: Bungie.Platform {
     switch self {
     case .xbox: return .xbox
     case .psn: return .psn
-    case .blizzard: return .blizzard
+    case .steam: return .steam
     default: return .all
     }
   }
@@ -197,12 +176,26 @@ private enum Platform: Int, CaseIterable, CustomStringConvertible {
     switch self {
     case .xbox: return "XBOX"
     case .psn: return "PSN"
-    case .blizzard: return "PC"
+    case .steam: return "STEAM"
     default: return ""
     }
   }
 
+  /// The platform's specific terminology for its user accounts.
+  public var accountName: String {
+    switch self {
+      case .xbox:
+        return "Gamertag"
+      case .psn:
+        return "PSN ID"
+      case .steam:
+        return "Steam Profile Name"
+      case .all:
+        return "Select a platform to narrow search"
+    }
+  }
+
   static var allCases: [Platform] {
-    return [.xbox, .psn, .blizzard]
+    return [.xbox, .psn, .steam]
   }
 }
