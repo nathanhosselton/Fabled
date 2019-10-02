@@ -1,6 +1,6 @@
 import UIKit
 import Model
-import PromiseKit
+import PMKFoundation
 
 final class PlayerSearchViewController: DeclarativeViewController, RootPresentationViewControllerDelegate {
   private let playerSearchPlatform = State(initialValue: Platform.all)
@@ -118,8 +118,12 @@ final class PlayerSearchViewController: DeclarativeViewController, RootPresentat
         .done { self.player.binding.emit($0.first) }
         .ensure { self.playerSearchActivityIndicator.stopAnimating() }
         .catch {
-          guard let error = $0 as? Bungie.Error, error == .systemDisabledForMaintenance else { return }
-          self.presentationShouldDisplayAlert(for: error)
+          switch $0 {
+          case let .badStatusCode(code, _, _) as PMKHTTPError where code == 400:
+            break //Ignore failed searches due unexpected character entry
+          default:
+            self.presentationShouldDisplayAlert(for: $0)
+          }
         }
     }
 
