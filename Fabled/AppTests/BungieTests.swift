@@ -15,7 +15,7 @@ class BungieTests: XCTestCase {
         let x = expectation(description: "Test full chain of requests against the Bungie.net API")
 
         firstly {
-            Bungie.searchForPlayer(with: "WeirdRituals#1656", on: .blizzard)
+            Bungie.searchForPlayer(with: "WeirdRituals", on: .steam)
         }.then {
             Bungie.getProfile(for: $0[0])
         }.done {

@@ -91,7 +91,7 @@ public enum Bungie {
 
     /// A type representing the available platforms for Destiny 2.
     public enum Platform: Int {
-        case none, xbox, psn, blizzard = 4
+        case none, xbox, psn, steam
 
         /// Internal use
         /// - Warning: Only valid for search queries.
@@ -102,7 +102,7 @@ public enum Bungie {
             switch self {
             case .xbox: return "XBOX"
             case .psn: return "PSN"
-            case .blizzard: return "PC"
+            case .steam: return "STEAM"
             default: return ""
             }
         }

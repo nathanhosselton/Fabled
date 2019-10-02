@@ -9,9 +9,9 @@ class PlayerTests: XCTestCase {
         {
             "Response": [
                 {
-                    "membershipType": 4,
+                    "membershipType": 3,
                     "membershipId": "4611686018468167462",
-                    "displayName": "WeirdRituals#1656"
+                    "displayName": "WeirdRituals"
                 }
             ]
         }
@@ -34,7 +34,7 @@ class PlayerTests: XCTestCase {
                 "profile": {
                     "data": {
                         "userInfo": {
-                            "membershipType": 4,
+                            "membershipType": 3,
                             "membershipId": "4611686018468167462",
                             "displayName": "WeirdRituals"
                         },

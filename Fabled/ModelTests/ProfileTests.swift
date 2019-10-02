@@ -552,7 +552,7 @@ private func generateProfile(with histories: [ActivityHistory] = [], at rank: Gl
         Profile(
             player: Player(
                 displayName: "WeirdRituals",
-                membershipType: Bungie.Platform.blizzard.rawValue,
+                membershipType: Bungie.Platform.steam.rawValue,
                 membershipId: "4611686018468167462"),
             glory: Progression(
                 dailyProgress: 0,
